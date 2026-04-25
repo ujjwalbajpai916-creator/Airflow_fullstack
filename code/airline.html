@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirBook - Airline Reservation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: #0a3d62;
+            color: white;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .navbar input {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            background: white;
+            color: #333;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        .navbar input::placeholder {
+            color: #666;
+        }
+
+        /* Hero */
+        .hero {
+            height: 90vh;
+            background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmhvcHk3Zjc5bjIyNjgxbnBoOWIwdDRhMTNpeDJvcTZ4bmd2dzZxOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AlRXXdstsK9G1m01vT/200.webp') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* Flight Cards */
+        .flights {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 40px;
+            background: #f4f6f9;
+        }
+
+        .flight-card {
+            background: white;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Seat UI */
+        .plane {
+            display: grid;
+            grid-template-columns: repeat(7, 40px);
+            gap: 10px;
+            justify-content: center;
+            margin: 40px;
+        }
+
+        .seat {
+            width: 40px;
+            height: 40px;
+            background: #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .seat:hover {
+            background: #00b4d8;
+        }
+
+        .selected {
+            background: green;
+        }
+
+        .occupied {
+            background: red;
+        }
+
+        /* Payment */
+        .payment-box {
+            width: 350px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a3d62;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        /* Responsive */
+        @media(max-width:600px) {
+            .flights {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">✈️ AirBook</div>
+        <input type="text" id="searchInput" placeholder="Search flights..." onkeyup="searchFlights()">
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-overlay">
+            <h1>Book Your Flight</h1>
+            <p>Fast • Secure • Affordable</p>
+            <button class="btn">Search Flights</button>
+        </div>
+    </section>
+
+    <!-- Flights -->
+    <section class="flights" id="flightsSection">
+        <div class="flight-card">
+            <h3>Delhi → Mumbai</h3>
+            <p>10:00 AM</p>
+            <p class="price">₹5000</p>
+            <button class="btn" onclick="showSeats()">Book</button>
+        </div>
+
+        <div class="flight-card">
+            <h3>Delhi → Bangalore</h3>
+            <p>3:00 PM</p>
+            <p class="price">₹6500</p>
+            <button class="btn" onclick="showSeats()">Book</button>
+        </div>
+
+        <div class="flight-card">
+            <h3>Mumbai → Chennai</h3>
+            <p>6:00 AM</p>
+            <p class="price">₹4500</p>
+            <button class="btn" onclick="showSeats()">Book</button>
+        </div>
+
+        <div class="flight-card">
+            <h3>Bangalore → Hyderabad</h3>
+            <p>9:00 PM</p>
+            <p class="price">₹3500</p>
+            <button class="btn" onclick="showSeats()">Book</button>
+        </div>
+    </section>
+
+    <!-- Seats -->
+    <h2 style="text-align:center;">Select Seat</h2>
+    <div class="plane" id="plane"></div>
+
+    <div style="text-align:center;">
+        <button class="btn" onclick="goPayment()">Continue</button>
+    </div>
+
+    <!-- Payment -->
+    <div class="payment-box" id="payment" style="display:none;">
+        <h2>Payment</h2>
+        <input placeholder="Card Number">
+        <input placeholder="Name">
+        <input placeholder="CVV">
+        <button class="btn" onclick="success()">Pay Now</button>
+    </div>
+
+    <!-- Success -->
+    <div id="success" style="display:none;text-align:center;">
+        <h1>✅ Booking Confirmed!</h1>
+    </div>
+
+    <footer>
+        <p>© 2026 AirBook Airline System</p>
+    </footer>
+
+    <script>
+        // Seat generator
+        const plane = document.getElementById("plane");
+        for (let i = 0; i < 35; i++) {
+            let seat = document.createElement("div");
+            seat.classList.add("seat");
+            seat.onclick = () => seat.classList.toggle("selected");
+            plane.appendChild(seat);
+        }
+
+        // Search functionality
+        function searchFlights() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toUpperCase();
+            const section = document.getElementById("flightsSection");
+            const cards = section.getElementsByClassName("flight-card");
+
+            for (let i = 0; i < cards.length; i++) {
+                const h3 = cards[i].getElementsByTagName("h3")[0];
+                if (h3) {
+                    const text = h3.textContent || h3.innerText;
+                    cards[i].style.display = text.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+                }
+            }
+        }
+
+        // Navigation
+        function showSeats() {
+            window.scrollTo(0, 600);
+        }
+
+        function goPayment() {
+            document.getElementById("payment").style.display = "block";
+        }
+
+        function success() {
+            document.getElementById("success").style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>
