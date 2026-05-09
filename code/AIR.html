@@ -1,0 +1,4523 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUS AIR â€” Fly Beyond Imagination</title>
+    <style>
+        :root {
+            --bg-primary: #030712;
+            --bg-secondary: #060d1f;
+            --bg-card: rgba(10, 20, 50, 0.6);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(99, 179, 237, 0.3);
+
+            --blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --purple: #7c3aed;
+            --purple-light: #a78bfa;
+            --indigo: #4f46e5;
+            --pink: #ec4899;
+
+            --gradient-primary: linear-gradient(135deg, #3b82f6, #7c3aed, #06b6d4);
+            --gradient-hero: linear-gradient(135deg, #030712 0%, #0a0f2c 40%, #060d1f 100%);
+            --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(124, 58, 237, 0.1));
+
+            --text-primary: #f0f9ff;
+            --text-secondary: rgba(240, 249, 255, 0.7);
+            --text-muted: rgba(240, 249, 255, 0.4);
+
+            --font-display: 'Orbitron', monospace;
+            --font-body: 'Rajdhani', sans-serif;
+            --font-ui: 'Exo 2', sans-serif;
+
+            --nav-height: 72px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        [data-theme="light"] {
+            --bg-primary: #f0f4ff;
+            --bg-secondary: #e8eeff;
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --bg-glass: rgba(59, 130, 246, 0.05);
+            --bg-glass-hover: rgba(59, 130, 246, 0.1);
+            --border-glass: rgba(59, 130, 246, 0.2);
+            --text-primary: #0a0f2c;
+            --text-secondary: rgba(10, 15, 44, 0.7);
+            --text-muted: rgba(10, 15, 44, 0.4);
+            --gradient-hero: linear-gradient(135deg, #e8eeff 0%, #c7d7ff 40%, #dde8ff 100%);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: none;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: rgba(99, 179, 237, 0.3);
+            color: var(--text-primary);
+        }
+
+        #cursor-glow {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(99, 179, 237, 0.4), transparent 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cyan-light);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: all 0.08s ease;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #030712;
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-inner {
+            text-align: center;
+            position: relative;
+        }
+
+        .loader-plane {
+            font-size: 3rem;
+            animation: loaderFly 2s ease-in-out infinite;
+            display: block;
+            filter: drop-shadow(0 0 20px var(--cyan));
+        }
+        @keyframes loaderFly {
+            0%,
+            100% {
+                transform: translateX(-30px) translateY(0) rotate(-10deg);
+            }
+            50% {
+                transform: translateX(30px) translateY(-15px) rotate(10deg);
+            }
+        }
+        .loader-brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            margin: 16px 0 8px;
+        }
+        .loader-bar-wrap {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 12px auto;
+            overflow: hidden;
+        }
+        .loader-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            animation: loaderProgress 2s ease-in-out forwards;
+        }
+        @keyframes loaderProgress {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+        .loader-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            font-family: var(--font-ui);
+        }
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 0 2rem;
+        }
+
+        #navbar.scrolled {
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 8px var(--cyan));
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.25rem;
+            margin-left: auto;
+        }
+
+        .nav-link {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 60%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .theme-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .theme-btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--cyan-light);
+        }
+
+        .nav-cta {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: var(--gradient-primary);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 179, 237, 0.5);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(3, 7, 18, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.75rem 0;
+            font-family: var(--font-ui);
+            border-bottom: 1px solid var(--border-glass);
+            transition: var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--cyan-light);
+            padding-left: 8px;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        /* â”€â”€â”€ HERO SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        #hero {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-hero);
+        }
+
+        .hero-sky {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            inset: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 3s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        .nebula {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(99, 179, 237, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.07) 0%, transparent 40%);
+        }
+
+        /* Clouds */
+        .clouds-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50px;
+            filter: blur(20px);
+        }
+
+        .cloud-1 {
+            width: 300px;
+            height: 80px;
+            top: 20%;
+            left: -300px;
+            animation: cloudMove 25s linear infinite;
+        }
+
+        .cloud-2 {
+            width: 200px;
+            height: 60px;
+            top: 40%;
+            left: -200px;
+            animation: cloudMove 35s linear infinite 10s;
+        }
+
+        .cloud-3 {
+            width: 400px;
+            height: 100px;
+            top: 60%;
+            left: -400px;
+            animation: cloudMove 20s linear infinite 5s;
+        }
+
+        .cloud-4 {
+            width: 250px;
+            height: 70px;
+            top: 75%;
+            left: -250px;
+            animation: cloudMove 30s linear infinite 15s;
+        }
+
+        .cloud-5 {
+            width: 180px;
+            height: 50px;
+            top: 15%;
+            left: -180px;
+            animation: cloudMove 28s linear infinite 8s;
+        }
+
+        @keyframes cloudMove {
+            0% {
+                transform: translateX(0);
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 500px));
+                opacity: 0;
+            }
+        }
+
+        /* Hero Plane */
+        .hero-plane-wrap {
+            position: absolute;
+            top: 35%;
+            left: -200px;
+            animation: heroFly 12s ease-in-out infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .plane-body {
+            font-size: 4rem;
+            filter: drop-shadow(0 0 30px var(--cyan)) drop-shadow(0 0 60px rgba(99, 179, 237, 0.5));
+            transform: rotate(-5deg);
+        }
+
+        .plane-trail {
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(to left, var(--cyan), transparent);
+            transform: translateY(-50%);
+            opacity: 0.6;
+        }
+
+        @keyframes heroFly {
+            0% {
+                left: -200px;
+                top: 35%;
+                transform: rotate(-5deg) scale(0.8);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            50% {
+                top: 28%;
+                transform: rotate(-3deg) scale(1.1);
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: calc(100vw + 200px);
+                top: 22%;
+                transform: rotate(-8deg) scale(0.9);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Content */
+        .hero-content {
+            text-align: center;
+            z-index: 5;
+            padding: 0 2rem;
+            padding-top: var(--nav-height);
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan-light);
+            margin-bottom: 2rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(6, 182, 212, 0);
+            }
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: 4px;
+        }
+
+        .title-line-1 {
+            display: block;
+            color: var(--text-primary);
+        }
+
+        .title-line-2 {
+            display: block;
+            min-height: 1.2em;
+        }
+
+        .gradient-text {
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #typed-text::after {
+            content: '|';
+            -webkit-text-fill-color: var(--cyan);
+            animation: blink 0.8s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            font-family: var(--font-ui);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--gradient-primary);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--cyan);
+            color: var(--cyan-light);
+            transform: translateY(-2px);
+        }
+
+        .glow-btn {
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.4), 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .glow-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(99, 179, 237, 0.6), 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item>span {
+            font-size: 1.4rem;
+            color: var(--cyan);
+            font-family: var(--font-display);
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform:
+                uppercase;
+            margin-top: 4px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 50px;
+            background: var(--border-glass);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: scrollBounce 2s ease infinite;
+        }
+
+        .scroll-mouse {
+            width: 22px;
+            height: 36px;
+            border: 2px solid var(--border-glass);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--cyan);
+            border-radius: 2px;
+            animation: scrollWheel 1.5s ease infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(12px);
+                opacity:
+                    0;
+            }
+        }
+
+        @keyframes scrollBounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
+        }
+
+        /* â”€â”€â”€ SECTION COMMONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+            background: rgba(6, 182, 212, 0.1);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-sub {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+        }
+
+        /* â”€â”€â”€ FLIGHT SEARCH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-search {
+            padding: 0 2rem 6rem;
+            margin-top: -3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-glass {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(10, 20, 50, 0.8);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 179, 237, 0.05);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.3);
+        }
+
+        .tab:not(.active):hover {
+            border-color: var(--border-glass);
+            color: var(--text-primary);
+        }
+
+        .search-class-select select {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-class-select select:focus {
+            border-color: var(--cyan);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .search-field {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .search-field label {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .search-input {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            outline: none;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .search-input:focus {
+            border-color: var(--cyan);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.7);
+        }
+
+        .swap-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-end;
+            flex-shrink: 0;
+        }
+
+        .swap-btn:hover {
+            background: var(--gradient-primary);
+            color: #fff;
+            transform: rotate(180deg);
+        }
+
+        .passenger-picker {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 0.5rem 0.8rem;
+        }
+
+        .pax-btn {
+            background: none;
+            border: none;
+            color: var(--cyan);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .pax-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+        }
+
+        .pax-info {
+            text-align: center;
+        }
+
+        .pax-info span {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .pax-info small {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .search-submit {
+            background: var(--gradient-primary);
+            border: none;
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.85rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            align-self: flex-end;
+        }
+
+        .search-btn-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .search-submit:hover .search-btn-shine {
+            left: 100%;
+        }
+
+        .search-tags {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-tag-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .search-tag {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-tag:hover {
+            border-color: var(--cyan);
+            color: var(--cyan-light);
+            background: rgba(6, 182, 212, 0.08);
+        }
+
+        /* â”€â”€â”€ DESTINATIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-destinations {
+            padding: 6rem 0;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 280px);
+            gap: 1.5rem;
+        }
+
+        .dest-large {
+            grid-column: 1;
+            grid-row: 1 / 3;
+        }
+
+        .dest-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            transition: var(--transition-slow);
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .dest-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--cyan);
+        }
+
+        .dest-card:hover .dest-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dest-img {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dest-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(3, 7, 18, 0.95) 0%, transparent 60%);
+        }
+
+        .dest-emoji {
+            font-size: clamp(3rem, 8vw, 6rem);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            z-index: 1;
+        }
+
+        .dest-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+        }
+
+        .dest-location {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .dest-name {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .dest-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .dest-details span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .dest-btn {
+            background: var(--gradient-primary);
+            border: none;
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .dest-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 3;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+        }
+
+        .dest-badge.new {
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+        }
+
+        .dest-badge.hot {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+        }
+
+        /* Tilt effect */
+        [data-tilt] {
+            transform-style: preserve-3d;
+        }
+
+        /* â”€â”€â”€ DEALS / BOARDING PASS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-deals {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .deals-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .boarding-pass {
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(10, 20, 50, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            transition: var(--transition-slow);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .boarding-pass:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .bp-left {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .bp-airline {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .bp-route {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bp-from,
+        .bp-to {
+            text-align: center;
+        }
+
+        .bp-code {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            display: block;
+        }
+
+        .bp-city {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .bp-path {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bp-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-glass);
+        }
+
+        .bp-plane-icon {
+            color: var(--cyan);
+            font-size: 1.2rem;
+            transform: rotate(90deg);
+        }
+
+        .bp-info-row {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .bp-info-item small {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .bp-info-item span {
+            font-family: var(--font-ui);
+            font-weight: 600;
+        }
+
+        .bp-divider {
+            width: 2px;
+            background:
+                repeating-linear-gradient(to bottom, var(--border-glass) 0, var(--border-glass) 8px, transparent 8px, transparent 16px);
+            position: relative;
+            margin: 1.5rem 0;
+            flex-shrink: 0;
+        }
+
+        .bp-hole {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bp-hole.top {
+            top: -10px;
+        }
+
+        .bp-hole.bottom {
+            bottom: -10px;
+        }
+
+        .bp-right {
+            width: 180px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: rgba(6, 182, 212, 0.03);
+        }
+
+        .bp-price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            background:
+                var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bp-save {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4ade80;
+            background: rgba(74,
+                    222, 128, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+        }
+
+        .bp-btn {
+            background: var(--gradient-primary);
+            border: none;
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .bp-barcode {
+            text-align: center;
+        }
+
+        .barcode-lines {
+            width: 120px;
+            height: 50px;
+            margin: 0 auto 4px;
+            background: repeating-linear-gradient(90deg, var(--text-secondary) 0, var(--text-secondary) 2px, transparent 2px,
+                    transparent 4px);
+            opacity: 0.5;
+        }
+
+        .bp-barcode span {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* â”€â”€â”€ SERVICES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-services {
+            padding: 6rem 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            background: var(--gradient-card);
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--cyan);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.3);
+        }
+
+        .service-icon {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .service-line {
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 1px;
+            margin-top: 1.25rem;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .service-card:hover .service-line {
+            width: 60px;
+        }
+
+        /* â”€â”€â”€ AI SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-ai {
+            padding: 6rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+        }
+
+        .ai-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--purple-light);
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .ai-subtitle {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            margin-bottom: 3rem;
+        }
+
+        .ai-chat-demo {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .ai-message {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .user-msg {
+            flex-direction: row-reverse;
+        }
+
+        .ai-avatar,
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .ai-avatar {
+            background: linear-gradient(135deg, var(--purple), var(--indigo));
+            color: #fff;
+        }
+
+        .user-avatar {
+            background: var(--gradient-primary);
+            color: #fff;
+        }
+
+        .ai-bubble {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-width: 85%;
+        }
+
+        .user-msg .ai-bubble {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .ai-cta {
+            margin: 0 auto;
+        }
+
+        /* â”€â”€â”€ STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-stats {
+            padding: 6rem 2rem;
+            position: relative;
+            background: var(--bg-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--cyan);
+            transform: translateY(-6px);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .counter-num {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline;
+        }
+
+        .stat-suffix {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--cyan);
+            display: inline;
+        }
+
+        .stat-desc {
+            font-family: var(--font-ui);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* â”€â”€â”€ PACKAGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-packages {
+            padding: 6rem 0;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .package-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: var(--transition-slow);
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pkg-featured {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(124, 58, 237, 0.1));
+            border-color: var(--cyan);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(99, 179, 237, 0.2);
+        }
+
+        .pkg-featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pkg-popular-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .pkg-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pkg-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pkg-header h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .pkg-tagline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .pkg-price {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pkg-currency {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            vertical-align: super;
+        }
+
+        .pkg-price {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 900;
+            background:
+                var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pkg-per {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .pkg-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .pkg-features li {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pkg-features li i {
+            width: 18px;
+            font-size: 0.8rem;
+        }
+
+        .pkg-features li:not(.dim) i {
+            color: var(--cyan);
+        }
+
+        .pkg-features li.dim {
+            color: var(--text-muted);
+        }
+
+        .pkg-features li.dim i {
+            color: var(--text-muted);
+        }
+
+        .pkg-btn {
+            width: 100%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.9rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pkg-btn:hover:not(.glow-btn) {
+            border-color: var(--cyan);
+            color: var(--cyan-light);
+        }
+
+        .pkg-featured .pkg-btn {
+            background: var(--gradient-primary);
+        }
+
+        /* â”€â”€â”€ TESTIMONIALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-testimonials {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .testimonials-slider {
+            position: relative;
+        }
+
+        .testimonials-track {
+            display: grid;
+            grid-template-columns: repeat(4, 100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .testimonial-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            flex: 0 0 calc(33.33% - 1rem);
+            min-width: 280px;
+            transition: var(--transition);
+        }
+
+        .testi-stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testi-text {
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testi-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .testi-author strong {
+            font-family: var(--font-ui);
+            font-weight: 600;
+        }
+
+        .testi-author small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .slider-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider-btn:hover {
+            background: var(--gradient-primary);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-glass);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background: var(--gradient-primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* â”€â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-faq {
+            padding: 6rem 0;
+        }
+
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item.open {
+            border-color: var(--cyan);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            font-family: var(--font-ui);
+            font-weight: 600;
+            gap: 1rem;
+        }
+
+        .faq-arrow {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+
+        .faq-item.open .faq-arrow {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            transform:
+                rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            line-height:
+                1.8;
+        }
+
+        /* â”€â”€â”€ CONTACT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-contact {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-desc {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .contact-item strong {
+            font-family: var(--font-ui);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-item div {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .contact-form-wrap {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .form-input {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            outline: none;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .form-input:focus {
+            border-color: var(--cyan);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-error {
+            font-size: 0.8rem;
+            color: #f87171;
+            min-height: 1rem;
+        }
+
+        .form-submit {
+            width: 100%;
+        }
+
+        /* â”€â”€â”€ NEWSLETTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .section-newsletter {
+            padding: 6rem 2rem;
+            background: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-plane {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px var(--cyan));
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .newsletter-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-container>p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-family: var(--font-ui);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 480px;
+            margin: 0 auto 1rem;
+        }
+
+        .nl-input {
+            flex: 1;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .nl-input:focus {
+            border-color: var(--cyan);
+        }
+
+        .nl-btn {
+            flex-shrink: 0;
+            background: var(--gradient-primary);
+            border: none;
+            color: #fff;
+            font-family:
+                var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.85rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nl-disclaimer {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .site-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding: 4rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            background:
+                var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            margin-bottom:
+                1.5rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .social-link:hover {
+            background: var(--gradient-primary);
+            color: #fff;
+            border-color: transparent;
+            transform:
+                translateY(-3px);
+        }
+
+        .footer-links-group h4 {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform:
+                uppercase;
+            color: var(--cyan);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links-group ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .footer-links-group a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size:
+                0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links-group a:hover {
+            color: var(--cyan-light);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-glass);
+            padding: 1.5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: var(--font-ui);
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: var(--font-ui);
+            transition: var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: var(--cyan-light);
+        }
+
+        /* â”€â”€â”€ MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: rgba(10, 20, 50, 0.95);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8) translateY(30px);
+            transition: var(--transition-slow);
+        }
+
+        .modal-overlay.open .modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+        }
+
+        .modal-success-icon {
+            font-size: 4rem;
+            color: #4ade80;
+            margin-bottom: 1.5rem;
+            animation: bounceIn 0.6s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+
+            60% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-sub {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            margin-bottom: 2rem;
+        }
+
+        .modal-ref {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-ref small {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+
+        .modal-ref strong {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--cyan);
+        }
+
+        .modal-action {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* â”€â”€â”€ BACK TO TOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 500;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(99, 179, 237, 0.6);
+        }
+
+        /* â”€â”€â”€ RESPONSIVE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        @media (max-width: 1100px) {
+            .destinations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+
+            .dest-large {
+                grid-column: 1 / 3;
+                grid-row: auto;
+                height: 300px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .pkg-featured {
+                transform: scale(1);
+            }
+
+            .pkg-featured:hover {
+                transform: translateY(-10px);
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .swap-btn {
+                display: none;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .boarding-pass {
+                flex-direction: column;
+            }
+
+            .bp-divider {
+                display: none;
+            }
+
+            .bp-right {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dest-large {
+                grid-column: 1;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .search-submit {
+                width: 100%;
+            }
+
+            .hero-stats {
+                gap: 1rem;
+            }
+
+            .stat-divider {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* â”€â”€â”€ LIGHT THEME OVERRIDES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        [data-theme="light"] #navbar.scrolled {
+            background: rgba(240, 244, 255, 0.95);
+        }
+
+        [data-theme="light"] .loader-brand {
+            -webkit-text-fill-color: unset;
+            color: #1a1a3e;
+        }
+
+        [data-theme="light"] .search-glass {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="light"] .boarding-pass {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="light"] .search-input {
+            color: #0a0f2c;
+        }
+
+        [data-theme="light"] .form-input {
+            color: #0a0f2c;
+        }
+
+        [data-theme="light"] .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        [data-theme="light"] #hero {
+            background: var(--gradient-hero);
+        }
+
+        [data-theme="light"] .star {
+            background: #1a1a3e;
+        }
+
+        [data-theme="light"] .cloud {
+            background: rgba(59, 130, 246, 0.08);
+        }
+    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <!-- AOS Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
+<body>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• LOADING SCREEN â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-plane">âœˆ</div>
+            <div class="loader-trail"></div>
+            <div class="loader-brand">NEXUS AIR</div>
+            <div class="loader-bar-wrap">
+                <div class="loader-bar"></div>
+            </div>
+            <div class="loader-text">Preparing your journey...</div>
+        </div>
+    </div>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CURSOR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div id="cursor-glow"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAVBAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">âœˆ</span>
+                <span class="logo-text">NEXUS AIR</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#flights" class="nav-link">Flights</a></li>
+                <li><a href="#destinations" class="nav-link">Destinations</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#deals" class="nav-link">Deals</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <a href="#" class="nav-cta">Book Now</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#flights">Flights</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#services">Services</a>
+            <a href="#deals">Deals</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HERO SECTION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="hero">
+        <!-- Sky Background with Stars -->
+        <div class="hero-sky">
+            <div class="stars" id="stars"></div>
+            <div class="nebula"></div>
+        </div>
+
+        <!-- Clouds -->
+        <div class="clouds-layer">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+            <div class="cloud cloud-4"></div>
+            <div class="cloud cloud-5"></div>
+        </div>
+
+        <!-- Flying Airplane -->
+        <div class="hero-plane-wrap" id="hero-plane">
+            <div class="plane-body">âœˆ</div>
+            <div class="plane-trail"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-badge" data-aos="fade-down" data-aos-delay="200">
+                <span class="badge-dot"></span> Premium Class Experience
+            </div>
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="300">
+                <span class="title-line-1">FLY BEYOND</span>
+                <span class="title-line-2 gradient-text" id="typed-text"></span>
+            </h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">
+                Where luxury meets the sky. Experience first-class travel reimagined<br>for the future of humanity's
+                greatest journey.
+            </p>
+            <div class="hero-actions" data-aos="fade-up" data-aos-delay="700">
+                <a href="#flights" class="btn-primary glow-btn">
+                    <i class="fas fa-search"></i> Search Flights
+                </a>
+                <a href="#destinations" class="btn-ghost">
+                    <i class="fas fa-globe"></i> Explore Routes
+                </a>
+            </div>
+            <!-- Hero Stats -->
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="900">
+                <div class="stat-item">
+                    <span class="stat-num" data-count="180">0</span><span>+</span>
+                    <span class="stat-label">Destinations</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num" data-count="98">0</span><span>%</span>
+                    <span class="stat-label">On-Time Rate</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num" data-count="4">0</span><span>M+</span>
+                    <span class="stat-label">Happy Flyers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll to Explore</span>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FLIGHT SEARCH â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="flights" class="section-search">
+        <div class="search-glass" data-aos="fade-up">
+            <div class="search-header">
+                <div class="search-tabs">
+                    <button class="tab active" data-tab="oneway">One Way</button>
+                    <button class="tab" data-tab="roundtrip">Round Trip</button>
+                    <button class="tab" data-tab="multicity">Multi-City</button>
+                </div>
+                <div class="search-class-select">
+                    <select id="cabin-class">
+                        <option>Economy</option>
+                        <option>Business</option>
+                        <option selected>First Class</option>
+                    </select>
+                </div>
+            </div>
+            <div class="search-form">
+                <div class="search-field">
+                    <label><i class="fas fa-plane-departure"></i> From</label>
+                    <input type="text" placeholder="Departure City" value="New Delhi (DEL)" class="search-input" />
+                    <div class="field-glow"></div>
+                </div>
+                <button class="swap-btn" id="swap-btn" title="Swap">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                <div class="search-field">
+                    <label><i class="fas fa-plane-arrival"></i> To</label>
+                    <input type="text" placeholder="Destination City" value="Dubai (DXB)" class="search-input" />
+                    <div class="field-glow"></div>
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-calendar-alt"></i> Departure</label>
+                    <input type="date" class="search-input" />
+                    <div class="field-glow"></div>
+                </div>
+                <div class="search-field" id="return-field">
+                    <label><i class="fas fa-calendar-check"></i> Return</label>
+                    <input type="date" class="search-input" />
+                    <div class="field-glow"></div>
+                </div>
+                <div class="search-field passenger-field">
+                    <label><i class="fas fa-users"></i> Passengers</label>
+                    <div class="passenger-picker">
+                        <button class="pax-btn minus" data-target="adults">âˆ’</button>
+                        <div class="pax-info">
+                            <span id="adults-count">1</span>
+                            <small>Adults</small>
+                        </div>
+                        <button class="pax-btn plus" data-target="adults">+</button>
+                    </div>
+                    <div class="field-glow"></div>
+                </div>
+                <button class="search-submit glow-btn" id="search-btn">
+                    <span class="search-btn-text"><i class="fas fa-search"></i> Search Flights</span>
+                    <div class="search-btn-shine"></div>
+                </button>
+            </div>
+            <!-- Search Suggestions -->
+            <div class="search-tags">
+                <span class="search-tag-label">Popular:</span>
+                <button class="search-tag">ðŸ—¼ Paris</button>
+                <button class="search-tag">ðŸ—½ New York</button>
+                <button class="search-tag">ðŸ™ï¸ Tokyo</button>
+                <button class="search-tag">ðŸŒ‡ Dubai</button>
+                <button class="search-tag">ðŸ›ï¸ Rome</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• POPULAR DESTINATIONS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="destinations" class="section-destinations">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Explore the World</span>
+                <h2 class="section-title">Popular <span class="gradient-text">Destinations</span></h2>
+                <p class="section-sub">Handpicked routes for the discerning traveler</p>
+            </div>
+            <div class="destinations-grid">
+                <!-- Destination Cards -->
+                <div class="dest-card dest-large" data-aos="fade-right" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸ—¼</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> France</div>
+                        <h3 class="dest-name">Paris</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 8h 30m</span>
+                            <span><i class="fas fa-tag"></i> From $699</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="dest-badge">Bestseller</div>
+                </div>
+                <div class="dest-card" data-aos="fade-up" data-aos-delay="100" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #0d0d1a 0%, #1a0533 50%, #2d1b69 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸ—½</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> USA</div>
+                        <h3 class="dest-name">New York</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 14h 15m</span>
+                            <span><i class="fas fa-tag"></i> From $899</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="dest-card" data-aos="fade-up" data-aos-delay="200" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a3e 50%, #2a4858 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸ™ï¸</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Japan</div>
+                        <h3 class="dest-name">Tokyo</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 9h 45m</span>
+                            <span><i class="fas fa-tag"></i> From $749</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="dest-badge new">New Route</div>
+                </div>
+                <div class="dest-card" data-aos="fade-left" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸŒ‡</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> UAE</div>
+                        <h3 class="dest-name">Dubai</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 3h 30m</span>
+                            <span><i class="fas fa-tag"></i> From $299</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="dest-card" data-aos="fade-up" data-aos-delay="100" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #1a0000 0%, #3d0000 50%, #6b0000 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸ›ï¸</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Italy</div>
+                        <h3 class="dest-name">Rome</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 9h 00m</span>
+                            <span><i class="fas fa-tag"></i> From $599</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="dest-card" data-aos="fade-up" data-aos-delay="200" data-tilt>
+                    <div class="dest-img"
+                        style="background: linear-gradient(135deg, #002244 0%, #003366 50%, #004080 100%)">
+                        <div class="dest-overlay"></div>
+                        <div class="dest-emoji">ðŸ¦</div>
+                    </div>
+                    <div class="dest-info">
+                        <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Kenya</div>
+                        <h3 class="dest-name">Nairobi</h3>
+                        <div class="dest-details">
+                            <span><i class="fas fa-clock"></i> 7h 20m</span>
+                            <span><i class="fas fa-tag"></i> From $549</span>
+                        </div>
+                        <button class="dest-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="dest-badge hot">Hot Deal</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="section-container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">Limited Time</span>
+            <h2 class="section-title">Exclusive <span class="gradient-text">Flight Deals</span></h2>
+            <p class="section-sub">Flash offers â€” grab them before they're gone</p>
+        </div>
+        <div class="deals-grid">
+            <!-- Boarding Pass Style Cards -->
+            <div class="boarding-pass" data-aos="fade-up" data-aos-delay="100">
+                <div class="bp-left">
+                    <div class="bp-airline">NEXUS AIR</div>
+                    <div class="bp-route">
+                        <div class="bp-from">
+                            <span class="bp-code">DEL</span>
+                            <span class="bp-city">New Delhi</span>
+                        </div>
+                        <div class="bp-path">
+                            <div class="bp-line"></div>
+                            <i class="fas fa-plane bp-plane-icon"></i>
+                            <div class="bp-line"></div>
+                        </div>
+                        <div class="bp-to">
+                            <span class="bp-code">DXB</span>
+                            <span class="bp-city">Dubai</span>
+                        </div>
+                    </div>
+                    <div class="bp-info-row">
+                        <div class="bp-info-item"><small>DATE</small><span>Dec 24, 2025</span></div>
+                        <div class="bp-info-item"><small>CLASS</small><span>Business</span></div>
+                        <div class="bp-info-item"><small>SEAT</small><span>4A</span></div>
+                    </div>
+                </div>
+                <div class="bp-divider">
+                    <div class="bp-hole top"></div>
+                    <div class="bp-hole bottom"></div>
+                </div>
+                <div class="bp-right">
+                    <div class="bp-price">$299</div>
+                    <div class="bp-save">Save 40%</div>
+                    <button class="bp-btn glow-btn">Book Now</button>
+                    <div class="bp-barcode">
+                        <div class="barcode-lines"></div>
+                        <span>NX2024DEL-DXB</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boarding-pass" data-aos="fade-up" data-aos-delay="200">
+                <div class="bp-left">
+                    <div class="bp-airline">NEXUS AIR</div>
+                    <div class="bp-route">
+                        <div class="bp-from">
+                            <span class="bp-code">BOM</span>
+                            <span class="bp-city">Mumbai</span>
+                        </div>
+                        <div class="bp-path">
+                            <div class="bp-line"></div>
+                            <i class="fas fa-plane bp-plane-icon"></i>
+                            <div class="bp-line"></div>
+                        </div>
+                        <div class="bp-to">
+                            <span class="bp-code">LHR</span>
+                            <span class="bp-city">London</span>
+                        </div>
+                    </div>
+                    <div class="bp-info-row">
+                        <div class="bp-info-item"><small>DATE</small><span>Jan 15, 2026</span></div>
+                        <div class="bp-info-item"><small>CLASS</small><span>First</span></div>
+                        <div class="bp-info-item"><small>SEAT</small><span>1A</span></div>
+                    </div>
+                </div>
+                <div class="bp-divider">
+                    <div class="bp-hole top"></div>
+                    <div class="bp-hole bottom"></div>
+                </div>
+                <div class="bp-right">
+                    <div class="bp-price">$1,299</div>
+                    <div class="bp-save">Save 25%</div>
+                    <button class="bp-btn glow-btn">Book Now</button>
+                    <div class="bp-barcode">
+                        <div class="barcode-lines"></div>
+                        <span>NX2025BOM-LHR</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boarding-pass" data-aos="fade-up" data-aos-delay="300">
+                <div class="bp-left">
+                    <div class="bp-airline">NEXUS AIR</div>
+                    <div class="bp-route">
+                        <div class="bp-from">
+                            <span class="bp-code">MAA</span>
+                            <span class="bp-city">Chennai</span>
+                        </div>
+                        <div class="bp-path">
+                            <div class="bp-line"></div>
+                            <i class="fas fa-plane bp-plane-icon"></i>
+                            <div class="bp-line"></div>
+                        </div>
+                        <div class="bp-to">
+                            <span class="bp-code">NRT</span>
+                            <span class="bp-city">Tokyo</span>
+                        </div>
+                    </div>
+                    <div class="bp-info-row">
+                        <div class="bp-info-item"><small>DATE</small><span>Feb 10, 2026</span></div>
+                        <div class="bp-info-item"><small>CLASS</small><span>Business</span></div>
+                        <div class="bp-info-item"><small>SEAT</small><span>7C</span></div>
+                    </div>
+                </div>
+                <div class="bp-divider">
+                    <div class="bp-hole top"></div>
+                    <div class="bp-hole bottom"></div>
+                </div>
+                <div class="bp-right">
+                    <div class="bp-price">$749</div>
+                    <div class="bp-save">Save 35%</div>
+                    <button class="bp-btn glow-btn">Book Now</button>
+                    <div class="bp-barcode">
+                        <div class="barcode-lines"></div>
+                        <span>NX2025MAA-NRT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SERVICES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="services" class="section-services">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">World Class</span>
+                <h2 class="section-title">Our <span class="gradient-text">Premium Services</span></h2>
+                <p class="section-sub">Every touchpoint of your journey redefined</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="service-icon-wrap"><i class="fas fa-utensils service-icon"></i></div>
+                    <h3>Gourmet Dining</h3>
+                    <p>Michelin-starred menus curated by world-renowned chefs at 40,000 feet.</p>
+                    <div class="service-line"></div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-icon-wrap"><i class="fas fa-bed service-icon"></i></div>
+                    <h3>Lie-Flat Suites</h3>
+                    <p>Private cabin suites with full-flat beds, ambient lighting and a dedicated butler.</p>
+                    <div class="service-line"></div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="service-icon-wrap"><i class="fas fa-wifi service-icon"></i></div>
+                    <h3>Hypersonic Wi-Fi</h3>
+                    <p>Starlink-powered satellite internet keeping you connected across every continent.</p>
+                    <div class="service-line"></div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="service-icon-wrap"><i class="fas fa-spa service-icon"></i></div>
+                    <h3>Onboard Spa</h3>
+                    <p>In-flight wellness treatments, aromatherapy and sleep optimization programs.</p>
+                    <div class="service-line"></div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="service-icon-wrap"><i class="fas fa-concierge-bell service-icon"></i></div>
+                    <h3>24/7 Concierge</h3>
+                    <p>Personal travel concierge available around the clock for every special request.</p>
+                    <div class="service-line"></div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="service-icon-wrap"><i class="fas fa-shield-alt service-icon"></i></div>
+                    <h3>Elite Lounge Access</h3>
+                    <p>Access to 400+ NexusAir premium lounges in 80 countries worldwide.</p>
+                    <div class="service-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• AI TRAVEL RECOMMENDATION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-ai">
+        <div class="ai-container" data-aos="fade-up">
+            <div class="ai-badge"><i class="fas fa-robot"></i> AI-Powered</div>
+            <h2 class="ai-title">Your Intelligent <span class="gradient-text">Travel Advisor</span></h2>
+            <p class="ai-subtitle">Let our neural travel AI craft the perfect itinerary, find hidden deals, and predict
+                the best time to fly â€” all personalized to you.</p>
+            <div class="ai-chat-demo">
+                <div class="ai-message ai-msg" data-aos="fade-left" data-aos-delay="200">
+                    <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="ai-bubble">Based on your travel history, I recommend flying to <strong>Kyoto</strong> in
+                        March for the cherry blossoms. I found a 34% cheaper fare on Tuesdays. Shall I book it?</div>
+                </div>
+                <div class="ai-message user-msg" data-aos="fade-right" data-aos-delay="400">
+                    <div class="ai-bubble">Yes! Book me Business Class, aisle seat, and add the wellness package.</div>
+                    <div class="ai-avatar user-avatar"><i class="fas fa-user"></i></div>
+                </div>
+                <div class="ai-message ai-msg" data-aos="fade-left" data-aos-delay="600">
+                    <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="ai-bubble">âœ… Done! DEL â†’ KIX on March 18th, Business Class, Seat 3A. Total: $1,109.
+                        Confirmation sent.</div>
+                </div>
+            </div>
+            <button class="btn-primary glow-btn ai-cta">
+                <i class="fas fa-magic"></i> Try AI Advisor
+            </button>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• STATS COUNTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-stats">
+        <div class="stats-bg"></div>
+        <div class="section-container">
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="stat-icon"><i class="fas fa-plane"></i></div>
+                    <div class="counter-num" data-count="1200">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-desc">Daily Flights</div>
+                </div>
+                <div class="stat-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                    <div class="counter-num" data-count="185">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-desc">Countries Served</div>
+                </div>
+                <div class="stat-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="counter-num" data-count="48">0</div>
+                    <div class="stat-suffix">M+</div>
+                    <div class="stat-desc">Passengers Yearly</div>
+                </div>
+                <div class="stat-card" data-aos="flip-left" data-aos-delay="400">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="counter-num" data-count="127">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-desc">Awards Won</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PACKAGES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-packages">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Travel Packages</span>
+                <h2 class="section-title">Choose Your <span class="gradient-text">Experience</span></h2>
+                <p class="section-sub">From essential to extraordinary â€” every journey crafted</p>
+            </div>
+            <div class="packages-grid">
+                <!-- Economy -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="pkg-header pkg-economy">
+                        <div class="pkg-icon"><i class="fas fa-star"></i></div>
+                        <h3>Economy Plus</h3>
+                        <div class="pkg-tagline">Smart Travel</div>
+                    </div>
+                    <div class="pkg-price"><span class="pkg-currency">$</span>299<span class="pkg-per">/person</span>
+                    </div>
+                    <ul class="pkg-features">
+                        <li><i class="fas fa-check"></i> 23kg Baggage Allowance</li>
+                        <li><i class="fas fa-check"></i> In-flight Entertainment</li>
+                        <li><i class="fas fa-check"></i> Meal Included</li>
+                        <li><i class="fas fa-check"></i> Extra Legroom</li>
+                        <li class="dim"><i class="fas fa-times"></i> Priority Boarding</li>
+                        <li class="dim"><i class="fas fa-times"></i> Lounge Access</li>
+                    </ul>
+                    <button class="pkg-btn">Select Plan</button>
+                </div>
+                <!-- Business -->
+                <div class="package-card pkg-featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="pkg-popular-badge">Most Popular</div>
+                    <div class="pkg-header pkg-business">
+                        <div class="pkg-icon"><i class="fas fa-gem"></i></div>
+                        <h3>Business Elite</h3>
+                        <div class="pkg-tagline">Premium Journey</div>
+                    </div>
+                    <div class="pkg-price"><span class="pkg-currency">$</span>899<span class="pkg-per">/person</span>
+                    </div>
+                    <ul class="pkg-features">
+                        <li><i class="fas fa-check"></i> 40kg Baggage Allowance</li>
+                        <li><i class="fas fa-check"></i> Lie-Flat Business Seat</li>
+                        <li><i class="fas fa-check"></i> Gourmet 5-Course Meal</li>
+                        <li><i class="fas fa-check"></i> Priority Boarding</li>
+                        <li><i class="fas fa-check"></i> Lounge Access</li>
+                        <li class="dim"><i class="fas fa-times"></i> Private Suite</li>
+                    </ul>
+                    <button class="pkg-btn glow-btn">Select Plan</button>
+                </div>
+                <!-- First Class -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="pkg-header pkg-first">
+                        <div class="pkg-icon"><i class="fas fa-crown"></i></div>
+                        <h3>First Class</h3>
+                        <div class="pkg-tagline">Opulent Journey</div>
+                    </div>
+                    <div class="pkg-price"><span class="pkg-currency">$</span>2,499<span class="pkg-per">/person</span>
+                    </div>
+                    <ul class="pkg-features">
+                        <li><i class="fas fa-check"></i> Unlimited Baggage</li>
+                        <li><i class="fas fa-check"></i> Private Suite Cabin</li>
+                        <li><i class="fas fa-check"></i> Personal Butler Service</li>
+                        <li><i class="fas fa-check"></i> Spa & Wellness Access</li>
+                        <li><i class="fas fa-check"></i> Exclusive Lounge + Limo</li>
+                        <li><i class="fas fa-check"></i> Champagne on Demand</li>
+                    </ul>
+                    <button class="pkg-btn">Select Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• TESTIMONIALS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-testimonials">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Passenger Stories</span>
+                <h2 class="section-title">What Travelers <span class="gradient-text">Say</span></h2>
+            </div>
+            <div class="testimonials-slider" id="testimonials-slider">
+                <div class="testimonials-track" id="testimonials-track">
+                    <div class="testimonial-card">
+                        <div class="testi-stars">â˜…â˜…â˜…â˜…â˜…</div>
+                        <p class="testi-text">"The First Class suite was unlike anything I've experienced. The personal
+                            butler knew my preferences before I even spoke. This is what flying should feel like."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">RS</div>
+                            <div><strong>Rahul Sharma</strong><br><small>Business Executive, Mumbai</small></div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testi-stars">â˜…â˜…â˜…â˜…â˜…</div>
+                        <p class="testi-text">"The AI advisor found me a deal that was 40% cheaper than anything I'd
+                            seen online. And the Business Class flat bed? I arrived in London fully rested."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">PM</div>
+                            <div><strong>Priya Mehta</strong><br><small>Tech Entrepreneur, Bengaluru</small></div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testi-stars">â˜…â˜…â˜…â˜…â˜…</div>
+                        <p class="testi-text">"Flying with family has never been this smooth. The kids had their own
+                            entertainment universe, and I actually had time to relax. NexusAir is our family's forever
+                            airline."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">AK</div>
+                            <div><strong>Arjun Kapoor</strong><br><small>Author, New Delhi</small></div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testi-stars">â˜…â˜…â˜…â˜…â˜…</div>
+                        <p class="testi-text">"As a frequent flyer, I've seen many lounges. The NexusAir Lounge in Dubai
+                            felt like a luxury hotel lobby. I stayed an extra hour before boarding just to enjoy it."
+                        </p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">SA</div>
+                            <div><strong>Sunita Agarwal</strong><br><small>Fashion Designer, Chennai</small></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn prev" id="prev-testi"><i class="fas fa-chevron-left"></i></button>
+                    <div class="slider-dots" id="slider-dots"></div>
+                    <button class="slider-btn next" id="next-testi"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FAQ â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-faq">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Got Questions?</span>
+                <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question">
+                        <span>What is NexusAir's baggage policy?</span>
+                        <div class="faq-arrow"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Economy Plus allows 23kg, Business Elite allows 40kg, and First Class offers unlimited
+                            baggage. Carry-on is always 7kg regardless of class. Special items can be pre-booked at no
+                            extra charge for First Class passengers.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        <span>Can I change or cancel my flight?</span>
+                        <div class="faq-arrow"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All NexusAir tickets can be modified up to 24 hours before departure. First Class
+                            tickets are fully refundable anytime. Business and Economy Plus have flexible modification
+                            fees. Use the NexusAir app or call our 24/7 concierge.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="faq-question">
+                        <span>How does the AI Travel Advisor work?</span>
+                        <div class="faq-arrow"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our Neural Travel AI analyzes your travel history, preferences, and seasonal patterns to
+                            recommend optimal destinations and booking windows. It monitors price fluctuations in
+                            real-time to alert you when fares drop below your target price.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="faq-question">
+                        <span>How early should I arrive at the airport?</span>
+                        <div class="faq-arrow"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We recommend 2 hours for domestic and 3 hours for international flights. First Class
+                            passengers enjoy dedicated fast-track lanes and private check-in counters â€” you can
+                            typically complete the process in under 15 minutes.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                    <div class="faq-question">
+                        <span>Do you offer group or corporate bookings?</span>
+                        <div class="faq-arrow"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. NexusAir offers dedicated group booking services for 10+ passengers with
+                            negotiated rates. Our corporate travel program provides assigned account managers, flexible
+                            invoicing, and priority support for business clients.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CONTACT FORM â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="contact" class="section-contact">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Contact <span class="gradient-text">Us</span></h2>
+                    <p class="contact-desc">Our global concierge team is available 24/7 to assist with bookings,
+                        queries, and special requests.</p>
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div><strong>Reservations</strong><br>+91 1800-NEXUS-AIR</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div><strong>Email Support</strong><br>care@nexusair.com</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div><strong>Headquarters</strong><br>Terminal 3, IGI Airport, New Delhi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrap" data-aos="fade-left">
+                    <form id="contact-form" class="contact-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="cf-name" placeholder="Your name" class="form-input" />
+                                <span class="form-error" id="err-name"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="cf-email" placeholder="you@email.com" class="form-input" />
+                                <span class="form-error" id="err-email"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select id="cf-subject" class="form-input">
+                                <option>Flight Booking</option>
+                                <option>Cancellation / Refund</option>
+                                <option>Lost Baggage</option>
+                                <option>Corporate Travel</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="cf-message" rows="4" placeholder="How can we help you?"
+                                class="form-input form-textarea"></textarea>
+                            <span class="form-error" id="err-message"></span>
+                        </div>
+                        <button type="submit" class="btn-primary glow-btn form-submit">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NEWSLETTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="section-newsletter">
+        <div class="newsletter-container" data-aos="zoom-in">
+            <div class="newsletter-plane">âœˆ</div>
+            <span class="section-tag">Stay Updated</span>
+            <h2 class="newsletter-title">Never Miss a <span class="gradient-text">Deal</span></h2>
+            <p>Get exclusive fare drops, new routes, and travel inspiration delivered to your inbox weekly.</p>
+            <div class="newsletter-form">
+                <input type="email" id="nl-email" placeholder="Enter your email address" class="nl-input" />
+                <button class="nl-btn glow-btn" id="nl-submit">
+                    <i class="fas fa-paper-plane"></i> Subscribe
+                </button>
+            </div>
+            <small class="nl-disclaimer">No spam. Unsubscribe anytime. Privacy guaranteed.</small>
+        </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo">âœˆ NEXUS AIR</div>
+                <p class="footer-tagline">Fly Beyond Imagination.<br>Experience the future of travel.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links-group">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About NexusAir</a></li>
+                    <li><a href="#">Leadership Team</a></li>
+                    <li><a href="#">Press Room</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-group">
+                <h4>Travel</h4>
+                <ul>
+                    <li><a href="#">Book a Flight</a></li>
+                    <li><a href="#">Manage Booking</a></li>
+                    <li><a href="#">Check-In Online</a></li>
+                    <li><a href="#">Flight Status</a></li>
+                    <li><a href="#">Baggage Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-group">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Travel Insurance</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Â© 2026 NexusAir International. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BOOKING CONFIRMATION POPUP â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" id="modal-close">Ã—</button>
+            <div class="modal-success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Booking Confirmed!</h3>
+            <p class="modal-sub">Your journey is booked. Check your email for the boarding pass and details.</p>
+            <div class="modal-ref">
+                <small>Booking Reference</small>
+                <strong id="modal-ref-num">NX-2026-847291</strong>
+            </div>
+            <button class="btn-primary glow-btn modal-action" id="modal-close-btn">
+                <i class="fas fa-download"></i> Download Boarding Pass
+            </button>
+        </div>
+    </div>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BACK TO TOP â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        'use strict';
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoader();
+            initCursor();
+            initStars();
+            initNavbar();
+            initMobileMenu();
+            initTypingText();
+            initHeroStatCounters();
+            initAOS();
+            initSearchSystem();
+            initPassengerPicker();
+            initDestinationCards();
+            initTestimonialsSlider();
+            initFAQ();
+            initContactForm();
+            initNewsletter();
+            initCounterAnimations();
+            initThemeToggle();
+            initBackToTop();
+            initScrollProgress();
+            initParallax();
+            initGSAPAnimations();
+            initBookingButtons();
+            initMouseGlow();
+            initTiltEffect();
+        });
+        function initLoader() {
+            const loader = document.getElementById('loader');
+            const minShowTime = 2200;
+            const startTime = Date.now();
+
+            window.addEventListener('load', () => {
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, minShowTime - elapsed);
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    document.body.style.overflow = 'visible';
+                    triggerHeroEntrance();
+                }, remaining);
+            });
+
+            // Fallback
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                document.body.style.overflow = 'visible';
+            }, 4000);
+        }
+
+        function triggerHeroEntrance() {
+            if (window.gsap) {
+                gsap.from('.hero-content > *', {
+                    y: 40, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out'
+                });
+            }
+        }
+        function initCursor() {
+            const glow = document.getElementById('cursor-glow');
+            const dot = document.getElementById('cursor-dot');
+            let mouseX = 0, mouseY = 0;
+            let glowX = 0, glowY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                dot.style.left = mouseX + 'px';
+                dot.style.top = mouseY + 'px';
+            });
+            function animateGlow() {
+                glowX += (mouseX - glowX) * 0.1;
+                glowY += (mouseY - glowY) * 0.1;
+                glow.style.left = glowX + 'px';
+                glow.style.top = glowY + 'px';
+                requestAnimationFrame(animateGlow);
+            }
+            animateGlow();
+            document.querySelectorAll('a, button, [data-tilt]').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    dot.style.transform = 'translate(-50%, -50%) scale(2.5)';
+                    dot.style.background = 'rgba(99, 179, 237, 0.8)';
+                    glow.style.width = '70px';
+                    glow.style.height = '70px';
+                });
+                el.addEventListener('mouseleave', () => {
+                    dot.style.transform = 'translate(-50%, -50%) scale(1)';
+                    dot.style.background = '';
+                    glow.style.width = '40px';
+                    glow.style.height = '40px';
+                });
+            });
+            if ('ontouchstart' in window) {
+                glow.style.display = 'none';
+                dot.style.display = 'none';
+                document.body.style.cursor = 'auto';
+            }
+        }
+        function initMouseGlow() {
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) * 100;
+                const y = (e.clientY / window.innerHeight) * 100;
+                document.documentElement.style.setProperty('--mouse-x', x + '%');
+                document.documentElement.style.setProperty('--mouse-y', y + '%');
+            });
+        }
+
+
+        function initStars() {
+            const container = document.getElementById('stars');
+            if (!container) return;
+            const count = 120;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                const size = Math.random() * 3 + 1;
+                star.className = 'star';
+                star.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --duration: ${Math.random() * 4 + 2}s;
+      --delay: ${Math.random() * 4}s;
+      opacity: ${Math.random() * 0.7 + 0.1};
+    `;
+                container.appendChild(star);
+            }
+        }
+        function initNavbar() {
+            const navbar = document.getElementById('navbar');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                const current = window.scrollY;
+                if (current > 80) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                if (current > 500) {
+                    if (current > lastScroll) {
+                        navbar.style.transform = 'translateY(-100%)';
+                    } else {
+                        navbar.style.transform = 'translateY(0)';
+                    }
+                } else {
+                    navbar.style.transform = 'translateY(0)';
+                }
+                lastScroll = current;
+            }, { passive: true });
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+        function initMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                const spans = hamburger.querySelectorAll('span');
+                if (mobileMenu.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans[0].style.transform = '';
+                    spans[1].style.opacity = '';
+                    spans[2].style.transform = '';
+                }
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    const spans = hamburger.querySelectorAll('span');
+                    spans.forEach(s => s.style = '');
+                });
+            });
+        }
+        function initTypingText() {
+            const el = document.getElementById('typed-text');
+            if (!el) return;
+            const words = ['IMAGINATION', 'HORIZONS', 'LIMITS', 'TOMORROW'];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let isPaused = false;
+
+            function type() {
+                const currentWord = words[wordIndex];
+
+                if (isPaused) {
+                    setTimeout(type, 1500);
+                    isPaused = false;
+                    return;
+                }
+
+                if (isDeleting) {
+                    el.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        wordIndex = (wordIndex + 1) % words.length;
+                        setTimeout(type, 400);
+                        return;
+                    }
+                } else {
+                    el.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === currentWord.length) {
+                        isDeleting = true;
+                        isPaused = true;
+                    }
+                }
+                setTimeout(type, isDeleting ? 60 : 110);
+            }
+            setTimeout(type, 1000);
+        }
+        function initHeroStatCounters() {
+            const statNums = document.querySelectorAll('.stat-num[data-count]');
+            let triggered = false;
+
+            function animateStats() {
+                if (triggered) return;
+                const hero = document.getElementById('hero');
+                if (!hero) return;
+                const rect = hero.getBoundingClientRect();
+                if (rect.bottom > window.innerHeight * 0.5) {
+                    triggered = true;
+                    statNums.forEach(el => {
+                        const target = parseInt(el.dataset.count);
+                        let count = 0;
+                        const step = target / 50;
+                        const interval = setInterval(() => {
+                            count = Math.min(count + step, target);
+                            el.textContent = Math.floor(count);
+                            if (count >= target) clearInterval(interval);
+                        }, 30);
+                    });
+                }
+            }
+            window.addEventListener('scroll', animateStats, { passive: true });
+            animateStats();
+        }
+        function initAOS() {
+            if (window.AOS) {
+                AOS.init({
+                    duration: 700,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 60,
+                });
+            }
+        }
+        function initSearchSystem() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const returnField = document.getElementById('return-field');
+                    if (tab.dataset.tab === 'oneway') {
+                        returnField.style.opacity = '0.4';
+                        returnField.style.pointerEvents = 'none';
+                    } else {
+                        returnField.style.opacity = '1';
+                        returnField.style.pointerEvents = 'auto';
+                    }
+                });
+            });
+            const swapBtn = document.getElementById('swap-btn');
+            if (swapBtn) {
+                swapBtn.addEventListener('click', () => {
+                    const inputs = document.querySelectorAll('.search-field .search-input');
+                    if (inputs.length >= 2) {
+                        const temp = inputs[0].value;
+                        inputs[0].value = inputs[1].value;
+                        inputs[1].value = temp;
+                        swapBtn.style.transform = 'rotate(180deg)';
+                        setTimeout(() => swapBtn.style.transform = '', 400);
+                    }
+                });
+            }
+            const searchBtn = document.getElementById('search-btn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', () => {
+                    const originalHTML = searchBtn.innerHTML;
+                    searchBtn.innerHTML = '<span class="search-btn-text"><i class="fas fa-spinner fa-spin"></i> Searching...</span>';
+                    searchBtn.disabled = true;
+                    setTimeout(() => {
+                        searchBtn.innerHTML = '<span class="search-btn-text"><i class="fas fa-check"></i> Found 24 Flights!</span>';
+                        searchBtn.style.background = 'linear-gradient(135deg, #4ade80, #22d3ee)';
+                        setTimeout(() => {
+                            searchBtn.innerHTML = originalHTML;
+                            searchBtn.style.background = '';
+                            searchBtn.disabled = false;
+                            showNotification('🔍 24 flights found for your route!', 'success');
+                        }, 2000);
+                    }, 1500);
+                });
+            }
+            document.querySelectorAll('.search-tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const inputs = document.querySelectorAll('.search-field .search-input');
+                    if (inputs.length > 1) {
+                        const city = tag.textContent.replace(/[^\w\s]/g, '').trim();
+                        inputs[1].value = city;
+                        inputs[1].focus();
+                        tag.style.borderColor = 'var(--cyan)';
+                        tag.style.color = 'var(--cyan-light)';
+                    }
+                });
+            });
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            const nextMonth = new Date(today);
+            nextMonth.setDate(today.getDate() + 14);
+
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            if (dateInputs[0]) dateInputs[0].value = nextWeek.toISOString().split('T')[0];
+            if (dateInputs[1]) dateInputs[1].value = nextMonth.toISOString().split('T')[0];
+        }
+        function initPassengerPicker() {
+            let adults = 1;
+            const countEl = document.getElementById('adults-count');
+
+            document.querySelectorAll('.pax-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('plus')) {
+                        adults = Math.min(adults + 1, 9);
+                    } else {
+                        adults = Math.max(adults - 1, 1);
+                    }
+                    if (countEl) {
+                        countEl.textContent = adults;
+                        countEl.style.transform = 'scale(1.3)';
+                        setTimeout(() => countEl.style.transform = '', 200);
+                    }
+                });
+            });
+        }
+        function initDestinationCards() {
+            document.querySelectorAll('.dest-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = btn.closest('.dest-card');
+                    const dest = card.querySelector('.dest-name')?.textContent; 'this destination';
+                    showNotification(`✈️ Searching flights to ${dest}...`, 'info');
+                    setTimeout(() => {
+                        document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 1200);
+                });
+            });
+        }
+        function initTestimonialsSlider() {
+            const track = document.getElementById('testimonials-track');
+            const prevBtn = document.getElementById('prev-testi');
+            const nextBtn = document.getElementById('next-testi');
+            const dotsContainer = document.getElementById('slider-dots');
+
+            if (!track) return;
+
+            const cards = track.querySelectorAll('.testimonial-card');
+            let current = 0;
+            const total = cards.length;
+
+            // Create dots
+            cards.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer?.appendChild(dot);
+            });
+
+            function goTo(index) {
+                current = (index + total) % total;
+                track.style.transform = `translateX(-${current * 100}%)`;
+                document.querySelectorAll('.dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === current);
+                });
+            }
+
+            prevBtn?.addEventListener('click', () => goTo(current - 1));
+            nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+            let autoPlay = setInterval(() => goTo(current + 1), 5000);
+            track.addEventListener('mouseenter', () => clearInterval(autoPlay));
+            track.addEventListener('mouseleave', () => {
+                autoPlay = setInterval(() => goTo(current + 1), 5000);
+            });
+
+            let touchStartX = 0;
+            track.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+            track.addEventListener('touchend', e => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+            });
+        }
+
+        // ─── FAQ ACCORDION ───────────────────────────────────────────────
+        function initFAQ() {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question?.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                    if (!isOpen) item.classList.add('open');
+                });
+            });
+        }
+
+        // ─── CONTACT FORM ────────────────────────────────────────────────
+        function initContactForm() {
+            const form = document.getElementById('contact-form');
+            if (!form) return;
+
+            function validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function showError(id, msg) {
+                const el = document.getElementById(id);
+                if (el) { el.textContent = msg; el.style.display = 'block'; }
+            }
+
+            function clearError(id) {
+                const el = document.getElementById(id);
+                if (el) { el.textContent = ''; }
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let valid = true;
+
+                const name = document.getElementById('cf-name')?.value.trim();
+                const email = document.getElementById('cf-email')?.value.trim();
+                const message = document.getElementById('cf-message')?.value.trim();
+
+                clearError('err-name');
+                clearError('err-email');
+                clearError('err-message');
+
+                if (!name || name.length < 2) {
+                    showError('err-name', 'Please enter your full name.');
+                    valid = false;
+                }
+                if (!email || !validateEmail(email)) {
+                    showError('err-email', 'Please enter a valid email address.');
+                    valid = false;
+                }
+                if (!message || message.length < 10) {
+                    showError('err-message', 'Please write a message (at least 10 characters).');
+                    valid = false;
+                }
+
+                if (valid) {
+                    const btn = form.querySelector('.form-submit');
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    btn.disabled = true;
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                        btn.style.background = 'linear-gradient(135deg, #4ade80, #22d3ee)';
+                        showNotification('✅ Your message has been sent! We\'ll respond within 24 hours.', 'success');
+                        form.reset();
+                        setTimeout(() => {
+                            btn.innerHTML = orig;
+                            btn.style.background = '';
+                            btn.disabled = false;
+                        }, 3000);
+                    }, 2000);
+                }
+            });
+
+            ['cf-name', 'cf-email', 'cf-message'].forEach(id => {
+                const input = document.getElementById(id);
+                input?.addEventListener('input', () => clearError('err-' + id.replace('cf-', '')));
+            });
+        }
+
+        // ─── NEWSLETTER ──────────────────────────────────────────────────
+        function initNewsletter() {
+            const btn = document.getElementById('nl-submit');
+            const input = document.getElementById('nl-email');
+
+            btn?.addEventListener('click', () => {
+                const email = input?.value.trim();
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showNotification('⚠️ Please enter a valid email address.', 'warning');
+                    input?.focus();
+                    return;
+                }
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
+                btn.style.background = 'linear-gradient(135deg, #4ade80, #22d3ee)';
+                if (input) input.value = '';
+                showNotification('🎉 Welcome aboard! Check your inbox for exclusive deals.', 'success');
+                setTimeout(() => {
+                    btn.innerHTML = orig;
+                    btn.style.background = '';
+                }, 3000);
+            });
+
+            input?.addEventListener('keydown', e => {
+                if (e.key === 'Enter') btn?.click();
+            });
+        }
+
+        // ─── COUNTER ANIMATIONS ─────────────────────────────────────────
+        function initCounterAnimations() {
+            const counters = document.querySelectorAll('.counter-num[data-count]');
+            const observed = new Set();
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !observed.has(entry.target)) {
+                        observed.add(entry.target);
+                        const el = entry.target;
+                        const target = parseInt(el.dataset.count);
+                        let current = 0;
+                        const duration = 2000;
+                        const steps = 60;
+                        const increment = target / steps;
+                        const interval = setInterval(() => {
+                            current = Math.min(current + increment, target);
+                            el.textContent = Math.floor(current);
+                            if (current >= target) {
+                                el.textContent = target;
+                                clearInterval(interval);
+                            }
+                        }, duration / steps);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(c => observer.observe(c));
+        }
+
+        // ─── THEME TOGGLE ───────────────────────────────────────────────
+        function initThemeToggle() {
+            const btn = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            const saved = localStorage.getItem('nexusair-theme') || 'dark';
+            html.setAttribute('data-theme', saved);
+            updateThemeIcon(saved, icon);
+
+            btn?.addEventListener('click', () => {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('nexusair-theme', next);
+                updateThemeIcon(next, icon);
+
+                html.style.transition = 'background 0.4s ease';
+                setTimeout(() => html.style.transition = '', 500);
+            });
+        }
+
+        function updateThemeIcon(theme, icon) {
+            if (!icon) return;
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // ─── BACK TO TOP ─────────────────────────────────────────────────
+        function initBackToTop() {
+            const btn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    btn?.classList.add('visible');
+                } else {
+                    btn?.classList.remove('visible');
+                }
+            }, { passive: true });
+
+            btn?.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ─── SCROLL PROGRESS BAR ─────────────────────────────────────────
+        function initScrollProgress() {
+            const bar = document.createElement('div');
+            bar.style.cssText = `
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+    background: linear-gradient(90deg, #3b82f6, #7c3aed, #06b6d4);
+    width: 0%; transition: width 0.1s ease;
+  `;
+            document.body.appendChild(bar);
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const pct = (scrollTop / docHeight) * 100;
+                bar.style.width = pct + '%';
+            }, { passive: true });
+        }
+
+        // ─── PARALLAX ────────────────────────────────────────────────────
+        function initParallax() {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const clouds = document.querySelectorAll('.cloud');
+                clouds.forEach((c, i) => {
+                    const speed = 0.05 + (i * 0.02);
+                    c.style.transform = `translateY(${scrollY * speed}px)`;
+                });
+            }, { passive: true });
+        }
+
+        // ─── GSAP ANIMATIONS ─────────────────────────────────────────────
+        function initGSAPAnimations() {
+            if (!window.gsap || !window.ScrollTrigger) return;
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.to('.hero-plane-wrap', {
+                scrollTrigger: {
+                    trigger: '#hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                },
+                y: -150, opacity: 0
+            });
+
+            gsap.from('.service-card', {
+                scrollTrigger: {
+                    trigger: '.services-grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 50, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out'
+            });
+
+            gsap.from('.package-card', {
+                scrollTrigger: {
+                    trigger: '.packages-grid',
+                    start: 'top 80%',
+                },
+                y: 60, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'back.out(1.7)'
+            });
+
+            gsap.from('.boarding-pass', {
+                scrollTrigger: {
+                    trigger: '.deals-grid',
+                    start: 'top 80%',
+                },
+                x: -50, opacity: 0, duration: 0.7, stagger: 0.2, ease: 'power3.out'
+            });
+
+            gsap.utils.toArray('.section-title').forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 85%' },
+                    y: 30, opacity: 0, duration: 0.8, ease: 'power2.out'
+                });
+            });
+        }
+
+        // ─── BOOKING BUTTONS ─────────────────────────────────────────────
+        function initBookingButtons() {
+            document.querySelectorAll('.bp-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const card = btn.closest('.boarding-pass');
+                    const from = card.querySelector('.bp-from .bp-code')?.textContent;
+                    const to = card.querySelector('.bp-to .bp-code')?.textContent;
+                    const price = card.querySelector('.bp-price')?.textContent;
+                    showBookingConfirmation(from, to, price);
+                });
+            });
+
+            document.querySelectorAll('.pkg-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pkg = btn.closest('.package-card');
+                    const pkgName = pkg.querySelector('h3')?.textContent;
+                    showNotification(`✈️ Opening booking for ${pkgName}...`, 'info');
+                    setTimeout(() => {
+                        document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+                });
+            });
+
+            document.querySelector('.nav-cta')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            document.querySelector('.hero-actions .btn-primary')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            document.querySelector('.ai-cta')?.addEventListener('click', () => {
+                showNotification('🤖 NexusAir AI Advisor — launching soon in our app!', 'info');
+            });
+
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('modal-close')?.addEventListener('click', () => modal?.classList.remove('open'));
+            document.getElementById('modal-close-btn')?.addEventListener('click', () => {
+                modal?.classList.remove('open');
+                showNotification('📧 Boarding pass sent to your email!', 'success');
+            });
+            modal?.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('open');
+            });
+        }
+
+        function showBookingConfirmation(from, to, price) {
+            const modal = document.getElementById('confirm-modal');
+            const refEl = document.getElementById('modal-ref-num');
+            if (!modal) return;
+
+            const ref = 'NX-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 900000 + 100000);
+            if (refEl) refEl.textContent = ref;
+
+            modal.classList.add('open');
+        }
+
+        // ─── TILT EFFECT ─────────────────────────────────────────────────
+        function initTiltEffect() {
+            document.querySelectorAll('[data-tilt]').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+                    card.style.transition = 'transform 0.1s ease';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.transition = 'transform 0.4s ease';
+                });
+            });
+        }
+
+        // ─── NOTIFICATIONS ───────────────────────────────────────────────
+        function showNotification(message, type = 'info') {
+            document.querySelectorAll('.nexus-notification').forEach(n => n.remove());
+
+            const colors = {
+                success: 'linear-gradient(135deg, #4ade80, #22d3ee)',
+                warning: 'linear-gradient(135deg, #fbbf24, #f97316)',
+                error: 'linear-gradient(135deg, #f87171, #ef4444)',
+                info: 'linear-gradient(135deg, #3b82f6, #7c3aed)',
+            };
+
+            const notification = document.createElement('div');
+            notification.className = 'nexus-notification';
+            notification.innerHTML = message;
+            notification.style.cssText = `
+    position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: ${colors[type]};
+    color: #fff; padding: 1rem 2rem; border-radius: 50px;
+    font-family: 'Exo 2', sans-serif; font-size: 0.9rem; font-weight: 600;
+    z-index: 99999; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap; max-width: 90vw; text-align: center;
+  `;
+            document.body.appendChild(notification);
+
+            requestAnimationFrame(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(-50%) translateY(0)';
+            });
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(-50%) translateY(10px)';
+                setTimeout(() => notification.remove(), 400);
+            }, 3500);
+        }
+
+        // ─── FIELD GLOW EFFECTS ─────────────────────────────────────────
+        document.querySelectorAll('.search-input, .form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                const glow = input.parentElement?.querySelector('.field-glow');
+                if (glow) {
+                    glow.style.cssText = `
+        position: absolute; inset: -1px; border-radius: 12px;
+        background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(99,179,237,0.3));
+        pointer-events: none; animation: glowPulse 1.5s ease infinite;
+        z-index: -1; opacity: 0.6;
+      `;
+                }
+            });
+            input.addEventListener('blur', () => {
+                const glow = input.parentElement?.querySelector('.field-glow');
+                if (glow) glow.style.cssText = '';
+            });
+        });
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+`;
+        document.head.appendChild(styleSheet);
+
+        // ─── SEARCH FORM SET TODAY ───────────────────────────────────────
+        window.addEventListener('load', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach((el, i) => {
+                if (!el.value) {
+                    const d = new Date();
+                    d.setDate(d.getDate() + (i === 0 ? 7 : 14));
+                    el.value = d.toISOString().split('T')[0];
+                    el.min = today;
+                }
+            });
+        });
+
+        // ─── ACTIVE NAV LINK HIGHLIGHT ON SCROLL ─────────────────────────
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                    link.style.color = 'var(--cyan-light)';
+                } else {
+                    link.style.color = '';
+                }
+            });
+        }, { passive: true });
+
+        // ─── CARD ENTRANCE ANIMATIONS ────────────────────────────────────
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = entry.target.dataset.transform; 'translateY(0)';
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.service-card, .stat-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.transform = 'translateY(30px)';
+            cardObserver.observe(card);
+        });
+
+        // ─── PAGE VISIBILITY ANIMATION PAUSE ─────────────────────────────
+        document.addEventListener('visibilitychange', () => {
+            document.querySelectorAll('.hero-plane-wrap, .newsletter-plane').forEach(el => {
+                el.style.animationPlayState = document.hidden ? 'paused' : 'running';
+            });
+        });
+
+        console.log('%cNEXUS AIR ✈', 'color: #06b6d4; font-size: 2rem; font-weight: 900; font-family: Orbitron, sans-serif;');
+        console.log('%cFly Beyond Imagination', 'color: #7c3aed; font-size: 1rem;');</script>
+</body>
+
+</html>
