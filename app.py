@@ -107,10 +107,12 @@ def seed_data():
         db.session.commit()
 
 
+# Create Flask app for Vercel/Gunicorn
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True, port=5000)
-    
+
 import mysql.connector
 
 db = mysql.connector.connect(
