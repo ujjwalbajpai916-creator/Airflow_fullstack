@@ -1,0 +1,4168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirFlow Airlines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e1a;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1800px;
+            margin: auto;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 78px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            background: rgba(5, 10, 35, 0.75);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            font-size: 20px;
+            box-shadow: 0 10px 25px rgba(79, 142, 247, 0.4);
+        }
+
+        .logo-text {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: white;
+        }
+
+        html {
+            overflow-y: scroll;
+            /* Scroll rahega */
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .navbar li a,
+        .nav-link {
+            position: relative;
+            padding: 10px 16px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+            border-radius: 8px;
+        }
+
+        .navbar li a:hover,
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .navbar li a.active {
+            color: #fff;
+        }
+
+        .login-nav-btn {
+            padding: 9px 22px !important;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border-radius: 20px !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            border: none;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .login-nav-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(79, 142, 247, 0.4);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            height: 720px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 78px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(5, 10, 25, 0.55), rgba(5, 10, 25, 0.78)), url('https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?q=80&w=2070&auto=format&fit=crop') center/cover;
+            animation: zoomHero 18s ease-in-out infinite alternate;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(79, 142, 247, 0.25), transparent 40%), radial-gradient(circle at bottom left, rgba(167, 139, 250, 0.20), transparent 35%);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.06) 45%, transparent 70%);
+            animation: lightMove 8s linear infinite;
+        }
+
+        @keyframes zoomHero {
+            from {
+                transform: scale(1)
+            }
+
+            to {
+                transform: scale(1.08)
+            }
+        }
+
+        @keyframes lightMove {
+            from {
+                transform: translateX(-100%)
+            }
+
+            to {
+                transform: translateX(100%)
+            }
+        }
+
+        .real-plane {
+            position: absolute;
+            width: 420px;
+            height: 220px;
+            top: 110px;
+            right: -450px;
+            z-index: 5;
+            background: url('https://static.vecteezy.com/system/resources/previews/024/724/353/non_2x/airplane-isolated-on-transparent-background-3d-rendering-illustration-free-png.png') center/contain no-repeat;
+            filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
+            animation: flyPlane 20s linear infinite;
+        }
+
+        @keyframes flyPlane {
+            0% {
+                right: -450px;
+                transform: translateY(0px) rotate(-4deg)
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(1deg)
+            }
+
+            100% {
+                right: 120%;
+                transform: translateY(10px) rotate(-2deg)
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: pulse-orb 6s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(79, 142, 247, 0.12);
+            top: -60px;
+            left: -60px;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(167, 139, 250, 0.1);
+            bottom: -40px;
+            right: -40px;
+            animation-delay: 3s;
+        }
+
+        @keyframes pulse-orb {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.7
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1
+            }
+        }
+
+        .stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #fff;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 0.9;
+                transform: scale(1.5)
+            }
+        }
+
+        .flight-path {
+            position: absolute;
+            top: 40%;
+            left: -200px;
+            animation: flyAcross 12s linear infinite;
+            opacity: 0.25;
+            font-size: 24px;
+        }
+
+        .flight-path-2 {
+            position: absolute;
+            top: 25%;
+            left: -200px;
+            animation: flyAcross 18s linear infinite 4s;
+            opacity: 0.15;
+            font-size: 16px;
+        }
+
+        @keyframes flyAcross {
+            from {
+                left: -200px
+            }
+
+            to {
+                left: 110%
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            animation: fadeUp 0.9s ease 0.2s both;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(79, 142, 247, 0.15);
+            border: 0.5px solid rgba(79, 142, 247, 0.35);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #7fb3ff;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa, #f9a8d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            padding: 13px 28px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 142, 247, 0.35);
+        }
+
+        .btn-outline {
+            padding: 13px 28px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ── SLIDER ── */
+        .premium-slider {
+            position: relative;
+            width: 100%;
+            padding: 40px 5%;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 560px;
+            border-radius: 34px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 1s ease, transform 1.2s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.20));
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 70px;
+            transform: translateY(-50%);
+            z-index: 2;
+            max-width: 520px;
+            color: white;
+        }
+
+        .tag {
+            display: inline-flex;
+            padding: 10px 18px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            margin-bottom: 22px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .slide-content h1 {
+            font-size: 72px;
+            line-height: 1;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -3px;
+        }
+
+        .slide-content p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.82);
+            margin-bottom: 28px;
+        }
+
+        .slide-content button {
+            padding: 16px 28px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .slide-content button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(79, 142, 247, 0.35);
+        }
+
+        .slider-dots {
+            position: absolute;
+            left: 50%;
+            bottom: 60px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.45);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            width: 42px;
+            border-radius: 20px;
+            background: white;
+        }
+
+        /* ── SEARCH ── */
+        .search-section {
+            padding: 0 40px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+
+        .stab {
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.5);
+            border: none;
+            background: transparent;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .stab.active {
+            background: rgba(79, 142, 247, 0.2);
+            color: #7fb3ff;
+            border: 0.5px solid rgba(79, 142, 247, 0.3);
+        }
+
+        .search-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .field-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .field-group input,
+        .field-group select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 11px 14px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+            width: 100%;
+        }
+
+        .field-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .field-group input:focus {
+            border-color: rgba(79, 142, 247, 0.5);
+        }
+
+        .field-group select option {
+            background: #1a2035;
+            color: #fff;
+        }
+
+        .search-btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.25s;
+            height: 44px;
+            font-family: inherit;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(79, 142, 247, 0.4);
+        }
+
+        /* ── STATS ── */
+        .stats-strip {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 36px 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 30px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            padding: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .see-all {
+            font-size: 13px;
+            color: #7fb3ff;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* ── OFFER CARDS ── */
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        #extraOffers {
+            display: none;
+        }
+
+        #extraOffers.show {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .offer-card {
+            border-radius: 16px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 0.5px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer-card:nth-child(1) {
+            background: linear-gradient(135deg, rgba(79, 142, 247, 0.25), rgba(79, 142, 247, 0.08));
+        }
+
+        .offer-card:nth-child(2) {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(167, 139, 250, 0.08));
+        }
+
+        .offer-card:nth-child(3) {
+            background: linear-gradient(135deg, rgba(249, 168, 212, 0.25), rgba(249, 168, 212, 0.08));
+        }
+
+        .offer-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .offer-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .offer-card p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .offer-arrow {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* ── FLIGHTS ── */
+        .flights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .flight-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .flight-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(79, 142, 247, 0.3);
+            transform: translateX(4px);
+        }
+
+        .flight-route {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .city-code {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .city-name {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        .route-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-direction: column;
+        }
+
+        .line {
+            width: 60px;
+            height: 0.5px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .line::after {
+            content: '✈';
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #7fb3ff;
+        }
+
+        .duration {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 500;
+        }
+
+        .flight-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .flight-time {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .flight-class {
+            display: flex;
+            gap: 4px;
+        }
+
+        .class-pill {
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .class-pill.avail {
+            background: rgba(79, 142, 247, 0.15);
+            color: #7fb3ff;
+        }
+
+        .flight-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .price-block {
+            text-align: right;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .price-note {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .book-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .book-btn:hover {
+            transform: scale(1.04);
+        }
+
+        /* ── TRACKER ── */
+        .tracker-section {
+            margin: 40px;
+            background: rgba(79, 142, 247, 0.06);
+            border: 0.5px solid rgba(79, 142, 247, 0.2);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .tracker-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+            animation: livePulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes livePulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2)
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.1)
+            }
+        }
+
+        .tracker-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .tracker-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        .tracker-input-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .tracker-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.06);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 12px;
+            height: 38px;
+            color: #fff;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tracker-input::placeholder {
+            text-transform: none;
+            letter-spacing: 0;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tracker-input:focus {
+            border-color: rgba(79, 142, 247, 0.5);
+            box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.1);
+        }
+
+        .track-btn {
+            height: 38px;
+            padding: 0 12px;
+            background: rgba(79, 142, 247, 0.2);
+            border: 0.5px solid rgba(79, 142, 247, 0.4);
+            border-radius: 8px;
+            color: #7fb3ff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .track-btn:hover {
+            background: rgba(79, 142, 247, 0.35);
+        }
+
+        .tracker-error {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(248, 113, 113, 0.1);
+            border: 0.5px solid rgba(248, 113, 113, 0.3);
+            border-radius: 10px;
+            color: #f87171;
+            font-size: 13px;
+        }
+
+        .tracker-error.show {
+            display: block;
+        }
+
+        .tracker-result {
+            margin-top: 20px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .tracker-result.show {
+            display: block;
+        }
+
+        .fl-result-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .fl-result-num {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .fl-result-airline {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 3px;
+        }
+
+        .status-pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 99px;
+            letter-spacing: 0.03em;
+        }
+
+        .pill-ontime {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 0.5px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .pill-delayed {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border: 0.5px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .pill-landed {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .route-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .airport-block {
+            text-align: center;
+            min-width: 56px;
+        }
+
+        .iata-code {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .airport-city {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        .route-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .progress-bar-wrap {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: visible;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4f8ef7, #a78bfa);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+            position: relative;
+        }
+
+        .progress-plane {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            filter: drop-shadow(0 0 4px rgba(79, 142, 247, 0.6));
+        }
+
+        .route-duration {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .stat-cell {
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 10px 12px;
+            text-align: center;
+        }
+
+        .stat-cell .s-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 5px;
+        }
+
+        .stat-cell .s-val {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .stat-cell .s-val.blue {
+            color: #7fb3ff;
+        }
+
+        .time-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .time-block {
+            text-align: center;
+        }
+
+        .time-block .t-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 4px;
+        }
+
+        .time-block .t-val {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .time-block .t-date {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 2px;
+        }
+
+        .time-arrow {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ── TESTIMONIALS ── */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .t-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .t-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-3px);
+        }
+
+        .t-stars {
+            color: #facc15;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .t-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .t-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .t-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .t-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .t-route {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ── BOOKING MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .modal {
+            background: #131828;
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            padding: 32px;
+            width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            from {
+                transform: scale(0.92);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .modal-field {
+            margin-bottom: 14px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+        }
+
+        .modal-field input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 11px 14px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .modal-field input:focus {
+            border-color: rgba(79, 142, 247, 0.5);
+        }
+
+        .modal-field input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-row .modal-field {
+            flex: 1;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            margin-top: 6px;
+            padding: 13px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .confirm-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(79, 142, 247, 0.35);
+        }
+
+        .success-msg {
+            text-align: center;
+            padding: 20px 0;
+            display: none;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 16px;
+        }
+
+        /* ── AUTH MODAL (Login / Sign Up) ── */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .auth-overlay.show {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .auth-modal {
+            background: #0f1629;
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 460px;
+            max-height: 92vh;
+            overflow-y: auto;
+            animation: modalPop 0.3s ease;
+            position: relative;
+        }
+
+        .auth-modal-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-modal-logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 8px 20px rgba(79, 142, 247, 0.35);
+        }
+
+        .auth-modal-logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .auth-modal-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 5px;
+            margin-bottom: 28px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 142, 247, 0.3);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-heading {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .form-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .afield {
+            margin-bottom: 14px;
+        }
+
+        .afield label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+        }
+
+        .afield input,
+        .afield select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 11px 14px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .afield input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .afield input:focus {
+            border-color: rgba(79, 142, 247, 0.55);
+            box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.1);
+        }
+
+        .afield-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .afield-row .afield {
+            flex: 1;
+        }
+
+        .afield-icon-wrap {
+            position: relative;
+        }
+
+        .afield-icon-wrap input {
+            padding-right: 40px;
+        }
+
+        .field-eye {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            font-size: 15px;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .pw-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .sbar {
+            flex: 1;
+            height: 3px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .strength-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 5px;
+        }
+
+        .ckbox-field {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .ckbox-field input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: #4f8ef7;
+            cursor: pointer;
+        }
+
+        .ckbox-field span {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        .ckbox-field span a {
+            color: #7fb3ff;
+            text-decoration: none;
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 18px;
+        }
+
+        .auth-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(79, 142, 247, 0.35);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .auth-divider-line {
+            flex: 1;
+            height: 0.5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-divider span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            white-space: nowrap;
+        }
+
+        .social-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: right;
+            font-size: 12px;
+            color: #7fb3ff;
+            margin-top: -8px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .switch-text {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .switch-text a {
+            color: #7fb3ff;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-error {
+            background: rgba(248, 113, 113, 0.1);
+            border: 0.5px solid rgba(248, 113, 113, 0.3);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #f87171;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        .auth-success-box {
+            text-align: center;
+            padding: 20px 0;
+            display: none;
+        }
+
+        .auth-success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        .auth-success-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .auth-success-sub {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        .benefits-strip {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .benefit-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+        }
+
+        .benefit-icon {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .benefit-text {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.4;
+        }
+
+        /* ── AI CHAT ── */
+        .ai-chat-btn {
+            position: fixed;
+            right: 28px;
+            bottom: 28px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            color: #fff;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            z-index: 1200;
+            border: none;
+        }
+
+        .ai-chat-box {
+            position: fixed;
+            right: 28px;
+            bottom: 100px;
+            width: 360px;
+            max-height: 520px;
+            background: rgba(8, 14, 28, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 26px;
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1200;
+        }
+
+        .ai-chat-box.open {
+            display: flex;
+        }
+
+        .ai-chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(11, 17, 32, 0.98);
+        }
+
+        .ai-chat-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .ai-chat-header span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .ai-chat-header button {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .ai-chat-body {
+            flex: 1;
+            padding: 18px 18px 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ai-message {
+            max-width: 84%;
+            padding: 12px 14px;
+            border-radius: 18px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .ai-message.assistant {
+            align-self: flex-start;
+            background: rgba(79, 142, 247, 0.14);
+            color: #eef4ff;
+        }
+
+        .ai-message.user {
+            align-self: flex-end;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .ai-chat-input {
+            display: flex;
+            gap: 10px;
+            padding: 14px 18px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 14, 28, 0.98);
+        }
+
+        .ai-chat-input input {
+            flex: 1;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .ai-chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .ai-chat-input button {
+            border: none;
+            border-radius: 14px;
+            padding: 0 18px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* ── FOOTER ── */
+        .ultra-footer {
+            position: relative;
+            background: linear-gradient(180deg, #03045e 0%, #020230 100%);
+            padding: 60px 8% 25px;
+            /* Reduced */
+            overflow: hidden;
+            color: white;
+        }
+
+        .ultra-footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(79, 142, 247, 0.18);
+            filter: blur(80px);
+        }
+
+        .ultra-footer::after {
+            content: '';
+            position: absolute;
+            right: -80px;
+            bottom: -80px;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.16);
+            filter: blur(80px);
+        }
+
+        .ultra-footer-top {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
+            margin-bottom: 45px;
+        }
+
+        .footer-brand {
+            max-width: 360px;
+        }
+
+        .footer-logo {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-logo-icon {
+            min-width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            font-size: 24px;
+            box-shadow: 0 12px 30px rgba(79, 142, 247, 0.35);
+        }
+
+        .footer-logo h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.70);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .footer-socials a {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: all .3s ease;
+        }
+
+        .footer-socials a:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+        }
+
+        .footer-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #4f8ef7, #a78bfa);
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, .72);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: .3s;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(6px);
+        }
+
+        .footer-newsletter {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 35px;
+            padding: 25px 30px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .footer-newsletter h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .footer-newsletter p {
+            color: rgba(255, 255, 255, .68);
+            font-size: 14px;
+        }
+
+        .newsletter-box {
+            display: flex;
+            gap: 12px;
+        }
+
+        .newsletter-box input {
+            width: 280px;
+            padding: 16px 18px;
+            border: none;
+            outline: none;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .newsletter-box button {
+            padding: 16px 26px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .newsletter-box button:hover {
+            transform: scale(1.03);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-socials a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #fff;
+            color: #0a0a8f;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            font-size: 20px;
+            transition: .3s;
+        }
+
+        .footer-socials a:hover {
+            background: #8b7cff;
+            color: #fff;
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 16px;
+            transition: .3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #ffffff;
+        }
+
+        .ticket-card {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* ── REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ==========================
+   VISA CHECKER
+========================== */
+
+        .visa-section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 35px;
+            border-radius: 25px;
+
+            background: rgba(18, 25, 45, .92);
+            backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, .35);
+
+            color: #fff;
+        }
+
+        .visa-section h2 {
+            text-align: center;
+            font-size: 38px;
+            margin-bottom: 35px;
+            color: #fff;
+        }
+
+        .visa-form {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .visa-form select,
+        .visa-form input {
+
+            width: 260px;
+            padding: 16px;
+
+            border-radius: 14px;
+
+            background: #1c2745;
+            color: #fff;
+
+            border: 1px solid #34456d;
+
+            font-size: 16px;
+            transition: .3s;
+        }
+
+        .visa-form select:focus,
+        .visa-form input:focus {
+
+            outline: none;
+
+            border-color: #4da3ff;
+
+            box-shadow: 0 0 15px rgba(77, 163, 255, .4);
+
+        }
+
+        .visa-form button {
+
+            padding: 16px 34px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+
+            color: #fff;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: .35s;
+
+        }
+
+        .visa-form button:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(37, 99, 235, .45);
+
+        }
+
+        .visa-result {
+
+            margin-top: 35px;
+
+        }
+
+        /* RESULT CARD */
+
+        .visa-card {
+
+            background: linear-gradient(135deg, #17213b, #202d4d);
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            color: #fff;
+
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .35);
+
+        }
+
+        .visa-card h3 {
+
+            color: #58a6ff;
+
+            margin-bottom: 20px;
+
+        }
+
+        .visa-card h2 {
+
+            color: #37d67a;
+
+            margin: 18px 0;
+
+        }
+
+        .visa-card p {
+
+            margin: 12px 0;
+
+            font-size: 17px;
+
+            color: #d5d8e3;
+
+        }
+
+        .visa-card hr {
+
+            border: none;
+
+            height: 1px;
+
+            background: #33415f;
+
+            margin: 20px 0;
+
+        }
+
+        .error {
+
+            background: #4b1d1d;
+
+            border: 1px solid #ff4d4d;
+
+            color: #ffb3b3;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+        }
+
+        .view-deals-btn {
+            position: relative;
+            z-index: 10;
+            /* ensures it's above overlay/background layers */
+            padding: 12px 28px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .deals-container {
+            display: none;
+            /* hidden until button click */
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 60px 40px;
+            background: #0a0f1e;
+        }
+
+        .deal-card {
+            background: #131a2c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .deal-card .discount {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .deal-card h3 {
+            margin: 20px 0 8px;
+            font-size: 20px;
+        }
+
+        .deal-card p {
+            color: #b0b6c8;
+            margin-bottom: 20px;
+        }
+
+        .deal-card button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .deals-container {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 60px 40px;
+        }
+
+        #dealsContainer {
+            display: none !important;
+        }
+
+        #dealsContainer.show {
+            display: grid !important;
+        }
+
+        .deals-container {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 60px 40px;
+            background: #0a0f1e;
+        }
+
+        .deal-card {
+            background: #131a2c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .deal-card .discount {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .deal-card h3 {
+            margin: 20px 0 8px;
+            font-size: 20px;
+        }
+
+        .deal-card p {
+            color: #b0b6c8;
+            margin-bottom: 20px;
+        }
+
+        .deal-card button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════ -->
+    <header>
+        <a class="header-logo" href="#home">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">AirFlow</div>
+        </a>
+
+        <nav>
+            <ul class="navbar">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#flights" class="nav-link">Flights</a></li>
+                <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="#offers" class="nav-link">Offers</a></li>
+                <li><a href="business.html" class="nav-link">Business Class</a></li>
+                <li><a href="support.html" class="nav-link">Support</a></li>
+
+                <li>
+                    <button type="button" class="login-nav-btn" onclick="openAuth('login')">
+                        Login / Sign Up
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <!-- ════════════════════════════════════════════
+     HOME / HERO
+════════════════════════════════════════════ -->
+    <section id="home">
+        <div class="hero">
+            <div class="hero-bg">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+            </div>
+
+            <div class="real-plane"></div>
+            <div class="stars" id="starsContainer"></div>
+
+            <div class="flight-path">✈</div>
+            <div class="flight-path-2">✈</div>
+
+            <div class="hero-content">
+                <div class="hero-badge">
+                    ✦ Best fares guaranteed · No hidden fees
+                </div>
+
+                <h1>Fly Smart,<br><span>Fly Easy</span></h1>
+
+                <p>Discover the world with premium comfort and unbeatable prices</p>
+
+                <div class="hero-cta">
+
+                    <button class="btn-primary" onclick="openAuth('signup')">
+                        Get Started Free →
+                    </button>
+
+                    <button id="viewDealsBtn" class="view-deals-btn">View Deals</button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals Container -->
+    <div id="dealsContainer" class="deals-container">
+        <div class="deal-card">
+            <span class="discount">30% OFF</span>
+            <h3>Delhi ✈ Mumbai</h3>
+            <p>Starting from <strong>₹2,999</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">25% OFF</span>
+            <h3>Indore ✈ Goa</h3>
+            <p>Starting from <strong>₹3,499</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">35% OFF</span>
+            <h3>Bangalore ✈ Dubai</h3>
+            <p>Starting from <strong>₹14,999</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">20% OFF</span>
+            <h3>Chennai ✈ Singapore</h3>
+            <p>Starting from <strong>₹12,499</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">40% OFF</span>
+            <h3>Hyderabad ✈ Bangkok</h3>
+            <p>Starting from <strong>₹10,999</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">28% OFF</span>
+            <h3>Kolkata ✈ Kathmandu</h3>
+            <p>Starting from <strong>₹6,999</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+        <div class="deal-card">
+            <span class="discount">50% OFF</span>
+            <h3>Ahmedabad ✈ London</h3>
+            <p>Starting from <strong>₹29,999</strong></p>
+            <button type="button">Book Now</button>
+        </div>
+    </div>
+
+
+
+
+    <!-- ════════════════════════════════════════════
+     AUTH MODAL  (Login + Sign Up)
+════════════════════════════════════════════ -->
+    <div class="auth-overlay" id="authOverlay" onclick="closeAuthOnBg(event)">
+        <div class="auth-modal">
+            <button class="auth-modal-close" onclick="closeAuth()">✕</button>
+
+            <!-- Logo -->
+            <div class="auth-modal-logo">
+                <div class="auth-modal-logo-icon">✈</div>
+                <span class="auth-modal-logo-text">AirFlow</span>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- ── LOGIN FORM ── -->
+            <div class="auth-form active" id="formLogin">
+                <div class="form-heading">Welcome back ✈</div>
+                <div class="form-sub">Sign in to access your bookings and deals</div>
+
+                <div class="social-btns">
+                    <button class="social-btn">G &nbsp;Google</button>
+                    <button class="social-btn">f &nbsp;Facebook</button>
+                </div>
+                <div class="auth-divider">
+                    <div class="auth-divider-line"></div><span>or continue with email</span>
+                    <div class="auth-divider-line"></div>
+                </div>
+
+                <div class="form-error" id="loginError"></div>
+
+                <div class="afield">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="rahul@email.com"
+                        onkeydown="if(event.key==='Enter')handleLogin()">
+                </div>
+                <div class="afield">
+                    <label>Password</label>
+                    <div class="afield-icon-wrap">
+                        <input type="password" id="loginPassword" placeholder="Enter your password"
+                            onkeydown="if(event.key==='Enter')handleLogin()">
+                        <button class="field-eye" onclick="togglePass('loginPassword',this)">👁</button>
+                    </div>
+                </div>
+                <a class="forgot-link">Forgot password?</a>
+
+                <button class="auth-submit" onclick="handleLogin()">Sign In →</button>
+                <div class="switch-text">Don't have an account? <a onclick="switchAuthTab('signup')">Sign up
+                        free</a>
+                </div>
+            </div>
+
+            <!-- ── SIGN UP FORM ── -->
+            <div class="auth-form" id="formSignup">
+                <div class="form-heading">Join AirFlow ✦</div>
+                <div class="form-sub">Create your free account and start exploring</div>
+
+                <div class="benefits-strip">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎟</div>
+                        <div class="benefit-text">Exclusive member fares</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⚡</div>
+                        <div class="benefit-text">Instant booking</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔔</div>
+                        <div class="benefit-text">Price drop alerts</div>
+                    </div>
+                </div>
+                <div class="social-btns">
+                    <a href="https://accounts.google.com/signin" class="social-btn">
+                        <button type="button">G &nbsp;Google</button>
+                    </a>
+                    <a href="https://www.facebook.com/login/" class="social-btn">
+                        <button type="button">f &nbsp;Facebook</button>
+                    </a>
+                </div>
+
+
+                <div class="form-error" id="signupError"></div>
+                <div class="auth-success-box" id="signupSuccess">
+                    <div class="auth-success-icon">✓</div>
+                    <div class="auth-success-title">Account Created!</div>
+                    <div class="auth-success-sub">Welcome to AirFlow!<br>Check your email to verify your account.
+                    </div>
+                </div>
+
+                <div id="signupFields">
+                    <div class="afield-row">
+                        <div class="afield"><label>First Name</label><input type="text" id="signupFirst"
+                                placeholder="Rahul"></div>
+                        <div class="afield"><label>Last Name</label><input type="text" id="signupLast"
+                                placeholder="Kumar"></div>
+                    </div>
+                    <div class="afield"><label>Email Address</label><input type="email" id="signupEmail"
+                            placeholder="rahul@email.com"></div>
+                    <div class="afield"><label>Phone Number</label><input type="tel" id="signupPhone"
+                            placeholder="+91 98765 43210"></div>
+                    <div class="afield">
+                        <label>Date of Birth</label>
+                        <input type="date" id="signupDob">
+                    </div>
+                    <div class="afield">
+                        <label>Password</label>
+                        <div class="afield-icon-wrap">
+                            <input type="password" id="signupPassword" placeholder="Create a strong password"
+                                oninput="checkStrength(this.value)">
+                            <button class="field-eye" onclick="togglePass('signupPassword',this)">👁</button>
+                        </div>
+                        <div class="pw-strength">
+                            <div class="sbar" id="bar1"></div>
+                            <div class="sbar" id="bar2"></div>
+                            <div class="sbar" id="bar3"></div>
+                            <div class="sbar" id="bar4"></div>
+                        </div>
+                        <div class="strength-label" id="strengthLabel">Password strength</div>
+                    </div>
+                    <div class="afield">
+                        <label>Confirm Password</label>
+                        <div class="afield-icon-wrap">
+                            <input type="password" id="signupConfirm" placeholder="Repeat your password">
+                            <button class="field-eye" onclick="togglePass('signupConfirm',this)">👁</button>
+                        </div>
+                    </div>
+                    <div class="ckbox-field">
+                        <input type="checkbox" id="agreeTerms">
+                        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
+                                Policy</a></span>
+                    </div>
+                    <div class="ckbox-field">
+                        <input type="checkbox" id="agreeOffers" checked>
+                        <span>Send me exclusive flight deals and travel offers</span>
+                    </div>
+                    <button class="auth-submit" onclick="handleSignup()">Create Account →</button>
+                    <div class="switch-text">Already have an account? <a onclick="switchAuthTab('login')">Sign
+                            in</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════
+     SLIDER
+════════════════════════════════════════════ -->
+    <section class="premium-slider">
+        <div class="slider-container">
+            <div class="slide active">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1974&auto=format&fit=crop"
+                    alt="Singapore" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">✈ International Flights</span>
+                    <h1>Singapore<br>Starting ₹19,999</h1>
+                    <p>Premium comfort with luxury travel experience.</p>
+                    <button>Explore →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop"
+                    alt="Maldives" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">🌴 Summer Offers</span>
+                    <h1>Maldives<br>Luxury Escape</h1>
+                    <p>Get 40% OFF on honeymoon packages.</p>
+                    <button>Book Now →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2070&auto=format&fit=crop"
+                    alt="Dubai" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">🏙 Premium Routes</span>
+                    <h1>Dubai<br>Business Class</h1>
+                    <p>Experience world-class luxury and comfort.</p>
+                    <button>Explore →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1974&auto=format&fit=crop"
+                    alt="Paris" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">🛫 Europe Deals</span>
+                    <h1>Paris<br>Romantic Flights</h1>
+                    <p>Fly to Europe with exclusive airline discounts.</p>
+                    <button>Discover →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
+                    alt="Switzerland" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">❄ Winter Destinations</span>
+                    <h1>Switzerland<br>Snow Adventures</h1>
+                    <p>Enjoy premium mountain vacation packages.</p>
+                    <button>Explore →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2070&auto=format&fit=crop"
+                    alt="Bali" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">🏖 Holiday Packages</span>
+                    <h1>Bali<br>Tropical Paradise</h1>
+                    <p>Relax with luxury beach destinations.</p>
+                    <button>Explore →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop"
+                    alt="New York" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">🌎 World Tour</span>
+                    <h1>New York<br>Direct Flights</h1>
+                    <p>Explore iconic cities with AirFlow.</p>
+                    <button>Book →</button>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://www.goindigo.in/content/dam/s6web/in/en/assets/partner/sbi/HP---WEB-SBI.jpg"
+                    alt="SBI" />
+                <div class="overlay"></div>
+                <div class="slide-content">
+                    <span class="tag">💳 Banking Partner Offer</span>
+                    <h1>SBI Card<br>Exclusive Rewards</h1>
+                    <p>Get instant discounts and cashback on bookings.</p>
+                    <button>Learn More →</button>
+                </div>
+            </div>
+        </div>
+        <div class="slider-dots" id="sliderDots"></div>
+    </section>
+
+
+    <!-- =========================
+         VISA REQUIREMENT CHECKER
+    ========================== -->
+
+    <section class="visa-section">
+
+        <h2>🛂 Visa Requirement Checker</h2>
+
+        <div class="visa-form">
+
+            <select id="nationality">
+                <option value="">🌍 Nationality</option>
+                <option value="India">🇮🇳 India</option>
+                <option value="USA">🇺🇸 USA</option>
+                <option value="UK">🇬🇧 United Kingdom</option>
+                <option value="Canada">🇨🇦 Canada</option>
+            </select>
+
+            <select id="country">
+                <option value="">✈ Destination</option>
+                <option value="Dubai">🇦🇪 Dubai (UAE)</option>
+                <option value="Thailand">🇹🇭 Thailand</option>
+                <option value="Japan">🇯🇵 Japan</option>
+                <option value="Singapore">🇸🇬 Singapore</option>
+                <option value="France">🇫🇷 France</option>
+            </select>
+
+            <input type="date" id="travelDate">
+
+            <button onclick="checkVisa()">🔍 Search</button>
+
+        </div>
+
+        <div id="visaResult" class="visa-result"></div>
+
+    </section>
+
+    <!-- ════════════════════════════════════════════
+     SEARCH
+════════════════════════════════════════════ -->
+    <div class="search-section">
+        <div class="search-card">
+            <div class="search-tabs">
+                <button class="stab active" onclick="switchSearchTab(this)">One Way</button>
+                <button class="stab" onclick="switchSearchTab(this)">Round Trip</button>
+                <button class="stab" onclick="switchSearchTab(this)">Multi-City</button>
+            </div>
+            <div class="search-fields">
+                <div class="field-group">
+                    <label>From</label>
+                    <input type="text" id="searchFrom" class="from-input" placeholder="Delhi (DEL)">
+                </div>
+                <div class="field-group">
+                    <label>To</label>
+                    <input type="text" id="searchTo" class="to-input" placeholder="Mumbai (BOM)">
+                </div>
+                <div class="field-group">
+                    <label>Departure</label>
+                    <input type="date">
+                </div>
+                <div class="field-group">
+                    <label>Passengers</label>
+                    <select id="searchPassengers">
+                        <option>1 Adult</option>
+                        <option>2 Adults</option>
+                        <option>2 Adults, 1 Child</option>
+                        <option>Family (4+)</option>
+                    </select>
+                </div>
+                <button id="searchBtn" class="search-btn">
+                    Search ✈
+                </button>
+            </div>
+            <div id="results" style="display:none; margin-top: 16px;"></div>
+            <div id="searchError" class="form-error" style="margin-top: 12px;"></div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     STATS
+════════════════════════════════════════════ -->
+    <div class="stats-strip">
+        <div class="stat-item">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Daily Flights</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">1M+</div>
+            <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Destinations</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Avg Rating</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Support</div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     OFFERS
+════════════════════════════════════════════ -->
+    <section id="offers" class="section reveal">
+        <div class="section-header">
+            <div class="section-title">🔥 Special Offers</div>
+            <a href="#" class="see-all" onclick="toggleOffers(); return false;">
+                Explore All Offers & Discounts →
+            </a>
+
+            <div id="extraOffers" class="offer-grid" style="display:none; margin-top:20px;">
+
+                <div class="offer-card">
+                    <div class="offer-badge">FLASH SALE</div>
+                    <h3>Flat ₹2000 Off</h3>
+                    <p>Use code AIRFLOW2000 on domestic flights</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">SUMMER SPECIAL</div>
+                    <h3>Up to 40% Off</h3>
+                    <p>Book your summer vacation now</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">BANK OFFER</div>
+                    <h3>15% Instant Discount</h3>
+                    <p>On HDFC, ICICI & SBI Cards</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">BUSINESS CLASS</div>
+                    <h3>Free Lounge Access</h3>
+                    <p>Complimentary lounge with Business Class</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">FESTIVAL DEAL</div>
+                    <h3>₹5000 Cashback</h3>
+                    <p>Travel during festive season and save more</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">STUDENT PASS</div>
+                    <h3>Extra 25% Off</h3>
+                    <p>Exclusive discount for students</p>
+                    <div class="offer-arrow">→</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="offer-grid">
+            <div class="offer-card">
+                <div class="offer-badge">LIMITED TIME</div>
+                <h3>50% Off</h3>
+                <p>On your first booking with us</p>
+                <div class="offer-arrow">→</div>
+            </div>
+
+            <div class="offer-card">
+                <div class="offer-badge">STUDENTS</div>
+                <h3>Extra 20%</h3>
+                <p>Exclusive student discount</p>
+                <div class="offer-arrow">→</div>
+            </div>
+
+            <div class="offer-card">
+                <div class="offer-badge">CASHBACK</div>
+                <h3>₹3000 Back</h3>
+                <p>Holiday season cashback offer</p>
+                <div class="offer-arrow">→</div>
+            </div>
+        </div>
+
+
+
+
+    </section>
+
+    <!-- ════════════════════════════════════════════
+     FLIGHTS
+════════════════════════════════════════════ -->
+    <section id="flights" class="section reveal">
+        <div class="section-header">
+            <div class="section-title">Available Flights</div>
+            <a class="see-all">View all →</a>
+        </div>
+        <div class="flights-list">
+            <div class="flight-card" onclick="openModal(1,'DEL','BOM','10:00 AM','₹4,500','2h 05m')">
+                <div class="flight-route">
+                    <div>
+                        <div class="city-code">DEL</div>
+                        <div class="city-name">New Delhi</div>
+                    </div>
+                    <div class="route-line">
+                        <div class="line"></div>
+                        <div class="duration">2h 05m</div>
+                    </div>
+                    <div>
+                        <div class="city-code">BOM</div>
+                        <div class="city-name">Mumbai</div>
+                    </div>
+                </div>
+                <div class="flight-meta">
+                    <div class="flight-time">10:00 AM → 12:05 PM</div>
+                    <div class="flight-class"><span class="class-pill avail">Economy</span><span
+                            class="class-pill avail">Business</span></div>
+                </div>
+                <div class="flight-right">
+                    <div class="price-block">
+                        <div class="price">₹4,500</div>
+                        <div class="price-note">per person</div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+            <div class="flight-card" onclick="openModal(2,'GWL','BLR','3:30 PM','₹6,500','2h 45m')">
+                <div class="flight-route">
+                    <div>
+                        <div class="city-code">GWL</div>
+                        <div class="city-name">Gwalior</div>
+                    </div>
+                    <div class="route-line">
+                        <div class="line"></div>
+                        <div class="duration">2h 45m</div>
+                    </div>
+                    <div>
+                        <div class="city-code">BLR</div>
+                        <div class="city-name">Bangalore</div>
+                    </div>
+                </div>
+                <div class="flight-meta">
+                    <div class="flight-time">3:30 PM → 6:15 PM</div>
+                    <div class="flight-class"><span class="class-pill avail">Economy</span><span
+                            class="class-pill">Business</span></div>
+                </div>
+                <div class="flight-right">
+                    <div class="price-block">
+                        <div class="price">₹6,500</div>
+                        <div class="price-note">per person</div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+            <div class="flight-card" onclick="openModal(3,'BOM','CCU','7:45 AM','₹5,200','2h 30m')">
+                <div class="flight-route">
+                    <div>
+                        <div class="city-code">BOM</div>
+                        <div class="city-name">Mumbai</div>
+                    </div>
+                    <div class="route-line">
+                        <div class="line"></div>
+                        <div class="duration">2h 30m</div>
+                    </div>
+                    <div>
+                        <div class="city-code">CCU</div>
+                        <div class="city-name">Kolkata</div>
+                    </div>
+                </div>
+                <div class="flight-meta">
+                    <div class="flight-time">7:45 AM → 10:15 AM</div>
+                    <div class="flight-class"><span class="class-pill avail">Economy</span><span
+                            class="class-pill avail">Business</span></div>
+                </div>
+                <div class="flight-right">
+                    <div class="price-block">
+                        <div class="price">₹5,200</div>
+                        <div class="price-note">per person</div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+     TRACKER
+════════════════════════════════════════════ -->
+        <div class="tracker-section">
+            <div class="tracker-header">
+                <div class="live-dot"></div>
+                <div>
+                    <div class="tracker-title">Live Flight Tracker</div>
+                    <div class="tracker-sub">Real-time status, route &amp; progress</div>
+                </div>
+            </div>
+            <div class="tracker-input-row">
+                <input class="tracker-input" id="flightInput" type="text" placeholder="Enter flight number (e.g. AI302)"
+                    maxlength="8" autocomplete="off" spellcheck="false" />
+                <button class="track-btn" onclick="trackFlight()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10" />
+                        <path d="M12 12 2.1 9.1" />
+                        <path d="m12 12 6-8.5" />
+                    </svg>
+                    Track Flight
+                </button>
+            </div>
+            <div class="tracker-error" id="trackerError"></div>
+            <div class="tracker-result" id="trackerResult"></div>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════ -->
+        <div class="section reveal">
+            <div class="section-header">
+                <div class="section-title">What Passengers Say</div>
+            </div>
+            <div class="testimonial-grid">
+                <div class="t-card">
+                    <div class="t-stars">★★★★★</div>
+                    <div class="t-text">"Best airline experience ever! The booking was seamless and the flight was super
+                        comfortable."</div>
+                    <div class="t-author">
+                        <div class="t-avatar" style="background:rgba(79,142,247,0.2);color:#7fb3ff;">RK</div>
+                        <div>
+                            <div class="t-name">Rahul Kumar</div>
+                            <div class="t-route">Delhi → Mumbai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-card">
+                    <div class="t-stars">★★★★★</div>
+                    <div class="t-text">"Very smooth booking process. Got amazing deals through the app. Highly
+                        recommended!"</div>
+                    <div class="t-author">
+                        <div class="t-avatar" style="background:rgba(167,139,250,0.2);color:#c4b5fd;">PS</div>
+                        <div>
+                            <div class="t-name">Priya Sharma</div>
+                            <div class="t-route">Gwalior → Bangalore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+        <footer class="ultra-footer">
+            <div class="ultra-footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">✈</div>
+                        <div>
+                            <h2>AirFlow</h2>
+                            <p>Experience luxury flying with premium comfort, global destinations, and world-class
+                                services.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="footer-social-section">
+                        <h3>SOCIAL MEDIA</h3>
+
+                        <div class="footer-socials">
+                            <a href="https://facebook.com" target="_blank">
+                                <i class="fab fa-facebook-f">ⓕ</i>
+                            </a>
+
+                            <a href="https://x.com" target="_blank">
+                                <i class="fa-brands fa-x-twitter">𝕏</i>
+                            </a>
+
+                            <a href="https://instagram.com" target="_blank">
+                                <i class="fa-brands fa-instagram">📷 </i>
+                            </a>
+
+                            <a href="https://linkedin.com" target="_blank">
+                                <i class="fab fa-linkedin-in">💼</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-grid">
+                    <div class="footer-links">
+                        <h3>Company</h3>
+                        <a href="https://www.goindigo.in/about-us.html?linkNav=About%20us%7CCOMPANY%7CFooter"
+                            target="_blank">About Us</a>
+                        <a href="https://www.goindigo.in/contact-us.html?linkNav=Contact%20Us%7CSUPPORT%7CFooter">Contact
+                            us</a><a
+                            href="https://www.goindigo.in/about-us/leadership-team.html?linkNav=Leadership%20Team%7CCOMPANY%7CFooter">Leadership
+                            team</a><a
+                            href="https://www.goindigo.in/information/investor-relations.html?linkNav=Investor%20Relations%7CCOMPANY%7CFooter">Investor
+                            Relations</a>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Support</h3>
+                        <a href="flight.html">Flight
+                            Status</a><a
+                            href="https://www.goindigo.in/initiate-refund.html?linkNav=Refund%20Claim%7CSUPPORT%7CFooter">Refund
+                            Claim
+                        </a><a href="helpcenter.html">Help
+                            Center
+                        </a><a href="baggagepolicy.html">Baggage
+                            Policy
+                        </a><a href="contacts.html">Contact
+                            Support</a>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <a href="offers.html">Offers</a><a href="destinations.html">Destinations</a><a
+                            href="web-checkin.html">Web Check-in</a><a href="travel-tips.html">Travel
+                            Tips</a><a href="download-app.html">Download App</a>
+                    </div>
+                </div>
+            </div>
+            <div class=" footer-newsletter">
+                <div>
+                    <h2>Get Exclusive Flight Deals ✈</h2>
+                    <p>Subscribe to receive premium offers, travel updates and luxury experiences.</p>
+                </div>
+                <div class="newsletter-box">
+                    <input type="email" placeholder="Enter your email" />
+                    <button>Subscribe</button>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 AirFlow Airlines · All Rights Reserved</p>
+
+                <div class="footer-bottom-links">
+                    <a
+                        href="https://www.goindigo.in/information/privacy.html?linkNav=Privacy%20Policy%7CQUICK%20LINKS%7CFooter">Privacy
+                        Policy</a>
+                    <a
+                        href="https://www.goindigo.in/information/terms-and-conditions.html?linkNav=Terms%20and%20Conditions%7CQUICK%20LINKS%7CFooter">Terms</a>
+                    <a href="https://www.goindigo.in/careers.html?linkNav=careers_footer">Cookies</a>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- ════════════════════════════════════════════
+     AI CHAT BUTTON
+════════════════════════════════════════════ -->
+        <button class="ai-chat-btn" onclick="toggleChat()">✈</button>
+        <div class="ai-chat-box" id="aiChatBox">
+            <div class="ai-chat-header">
+                <div>
+                    <h3>AirFlow AI</h3><span>Online Assistant</span>
+                </div>
+                <button onclick="toggleChat()">✕</button>
+            </div>
+            <div class="ai-chat-body" id="chatBody">
+                <div class="ai-message assistant">👋 Hello! How can I help you today?</div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="chatInput" placeholder="Ask about flights..."
+                    onkeydown="if(event.key==='Enter')sendMessage()" />
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+     BOOKING MODAL
+════════════════════════════════════════════ -->
+        <div class="modal-overlay" id="bookingModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-title" id="modalTitle">Book Flight</div>
+                    <button class="modal-close" onclick="closeModal()">✕</button>
+                </div>
+                <div id="bookingForm">
+                    <div id="flightSummary"
+                        style="background:rgba(79,142,247,0.08);border:0.5px solid rgba(79,142,247,0.2);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:rgba(255,255,255,0.7);">
+                    </div>
+                    <div class="modal-row">
+                        <div class="modal-field"><label>First Name</label><input type="text" id="bookingFirstName"
+                                placeholder="Rahul"></div>
+                        <div class="modal-field"><label>Last Name</label><input type="text" id="bookingLastName"
+                                placeholder="Kumar"></div>
+                    </div>
+                    <div class="modal-field"><label>Email Address</label><input type="email" id="bookingEmail"
+                            placeholder="rahul@email.com"></div>
+                    <div class="modal-field"><label>Phone Number</label><input type="tel" id="bookingPhone"
+                            placeholder="+91 98765 43210"></div>
+                    <div class="modal-row">
+                        <div class="modal-field"><label>Class</label><input type="text" id="bookingSeatClass"
+                                placeholder="Economy"></div>
+                        <div class="modal-field"><label>Passengers</label><input type="number" id="bookingPassengers"
+                                placeholder="1" min="1" max="9"></div>
+                    </div>
+                    <div id="bookingError" style="color:#f87171;margin-top:12px;font-size:13px;"></div>
+                    <button class="confirm-btn" onclick="confirmBooking()">Confirm Booking →</button>
+                </div>
+                <div class="success-msg" id="successMsg">
+                    <div class="success-icon">✓</div>
+                    <div style="font-size:20px;font-weight:700;margin-bottom:8px;">Booking Confirmed!</div>
+                    <div id="paymentModal" class="payment-modal">
+                        <div class="payment-box">
+                            <h2>💳 Choose Payment Method</h2>
+
+                            <h3>UPI Payment</h3>
+                            <input type="text" placeholder="Enter UPI ID (example@upi)">
+
+                            <br><br>
+
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=AirFlowPayment"
+                                alt="QR Code">
+
+                            <br><br>
+
+
+
+                            <button class="confirm-btn" onclick="processPayment()">
+                                💳 Pay Now
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div id="ticketSuccess" style="display:none;">
+                        <h2>🎉 Payment Successful</h2>
+                        <p>Your ticket has been confirmed.</p>
+
+                        <div id="ticketSuccess" style="display:none;">
+                            <div id="ticketDetails"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+
+
+
+            <script>
+
+                function processPayment() {
+
+                    alert("✅ Payment Successful");
+
+                    const firstName =
+                        document.getElementById('bookingFirstName').value;
+
+                    const lastName =
+                        document.getElementById('bookingLastName').value;
+
+                    document.getElementById("ticketDetails").innerHTML = `
+<div class="ticket-card">
+    <h2>🎫 AirFlow Boarding Pass</h2>
+    <hr>
+    <p><b>Name:</b> ${firstName} ${lastName}</p>
+    <p><b>Route:</b> ${selectedFlight.from} ➜ ${selectedFlight.to}</p>
+    <p><b>Departure:</b> ${selectedFlight.time}</p>
+    <p><b>Fare:</b> ${selectedFlight.price}</p>
+    <p><b>Status:</b> Confirmed ✅</p>
+</div>
+    `;
+
+                    document.getElementById("ticketSuccess").style.display = "block";
+                }
+
+                function processPayment() {
+                    document.getElementById("paymentModal").style.display = "flex";
+                }
+
+                function paymentSuccess() {
+                    alert("✅ Payment Successful");
+
+                    document.getElementById("paymentModal").style.display = "none";
+
+                    document.getElementById("ticketSuccess").style.display = "block";
+                }
+                /* ── Stars ── */
+                (function () {
+                    const c = document.getElementById('starsContainer');
+                    for (let i = 0; i < 80; i++) {
+                        const s = document.createElement('div');
+                        s.className = 'star';
+                        s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 5}s;`;
+                        c.appendChild(s);
+                    }
+                })();
+
+                /* ── Slider ── */
+                (function () {
+                    const slides = document.querySelectorAll('.slide');
+                    const dotsC = document.getElementById('sliderDots');
+                    let cur = 0, timer;
+                    slides.forEach((_, i) => {
+                        const d = document.createElement('span');
+                        d.className = 'dot' + (i === 0 ? ' active' : '');
+                        d.onclick = () => go(i);
+                        dotsC.appendChild(d);
+                    });
+                    function go(n) {
+                        slides[cur].classList.remove('active');
+                        dotsC.children[cur].classList.remove('active');
+                        cur = n;
+                        slides[cur].classList.add('active');
+                        dotsC.children[cur].classList.add('active');
+                        clearInterval(timer);
+                        timer = setInterval(() => go((cur + 1) % slides.length), 5000);
+                    }
+                    timer = setInterval(() => go((cur + 1) % slides.length), 5000);
+                })();
+
+                /* ── Search tabs ── */
+                function switchSearchTab(el) {
+                    document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+                    el.classList.add('active');
+                }
+
+                const flights = [
+                    {
+                        airline: "IndiGo",
+                        from: "Delhi",
+                        to: "Mumbai",
+                        departure: "06:30",
+                        arrival: "08:40",
+                        duration: "2h 10m",
+                        price: 3499
+                    },
+                    {
+                        airline: "Air India",
+                        from: "Delhi",
+                        to: "Mumbai",
+                        departure: "09:00",
+                        arrival: "11:20",
+                        duration: "2h 20m",
+                        price: 4299
+                    },
+                    {
+                        airline: "Vistara",
+                        from: "Delhi",
+                        to: "Mumbai",
+                        departure: "14:30",
+                        arrival: "16:45",
+                        duration: "2h 15m",
+                        price: 5199
+                    },
+                    {
+                        airline: "SpiceJet",
+                        from: "Mumbai",
+                        to: "Delhi",
+                        departure: "18:00",
+                        arrival: "20:10",
+                        duration: "2h 10m",
+                        price: 3899
+                    },
+                    {
+                        airline: "Akasa Air",
+                        from: "Delhi",
+                        to: "Bengaluru",
+                        departure: "07:45",
+                        arrival: "10:30",
+                        duration: "2h 45m",
+                        price: 4999
+                    },
+                    {
+                        airline: "Air India",
+                        from: "Bengaluru",
+                        to: "Delhi",
+                        departure: "16:00",
+                        arrival: "18:45",
+                        duration: "2h 45m",
+                        price: 5299
+                    },
+                    {
+                        airline: "IndiGo",
+                        from: "Mumbai",
+                        to: "Goa",
+                        departure: "08:00",
+                        arrival: "09:15",
+                        duration: "1h 15m",
+                        price: 2499
+                    },
+                    {
+                        airline: "Vistara",
+                        from: "Goa",
+                        to: "Mumbai",
+                        departure: "19:00",
+                        arrival: "20:15",
+                        duration: "1h 15m",
+                        price: 2699
+                    },
+                    {
+                        airline: "SpiceJet",
+                        from: "Delhi",
+                        to: "Jaipur",
+                        departure: "10:30",
+                        arrival: "11:35",
+                        duration: "1h 05m",
+                        price: 1999
+                    },
+                    {
+                        airline: "IndiGo",
+                        from: "Jaipur",
+                        to: "Delhi",
+                        departure: "15:20",
+                        arrival: "16:25",
+                        duration: "1h 05m",
+                        price: 2199
+                    },
+                    {
+                        airline: "Air India",
+                        from: "Hyderabad",
+                        to: "Chennai",
+                        departure: "09:30",
+                        arrival: "10:50",
+                        duration: "1h 20m",
+                        price: 2899
+                    },
+                    {
+                        airline: "Akasa Air",
+                        from: "Chennai",
+                        to: "Hyderabad",
+                        departure: "18:30",
+                        arrival: "19:50",
+                        duration: "1h 20m",
+                        price: 3099
+                    },
+                    {
+                        airline: "IndiGo",
+                        from: "Pune",
+                        to: "Kolkata",
+                        departure: "06:50",
+                        arrival: "09:30",
+                        duration: "2h 40m",
+                        price: 5499
+                    },
+                    {
+                        airline: "Vistara",
+                        from: "Kolkata",
+                        to: "Pune",
+                        departure: "17:40",
+                        arrival: "20:20",
+                        duration: "2h 40m",
+                        price: 5699
+                    },
+                    {
+                        airline: "Air India",
+                        from: "Ahmedabad",
+                        to: "Delhi",
+                        departure: "11:00",
+                        arrival: "12:35",
+                        duration: "1h 35m",
+                        price: 3299
+                    },
+                    {
+                        airline: "IndiGo",
+                        from: "Delhi",
+                        to: "Ahmedabad",
+                        departure: "13:30",
+                        arrival: "15:05",
+                        duration: "1h 35m",
+                        price: 3399
+                    }
+                ];
+
+                document.getElementById("searchBtn").addEventListener("click", function () {
+                    const from = document.querySelector(".from-input").value.trim().toLowerCase();
+                    const to = document.querySelector(".to-input").value.trim().toLowerCase();
+                    const resultBox = document.getElementById("results");
+
+                    if (!from || !to) {
+                        alert("Please enter From and To");
+                        return;
+                    }
+
+                    const result = flights.filter(f =>
+                        f.from.toLowerCase() === from &&
+                        f.to.toLowerCase() === to
+                    );
+
+                    if (result.length === 0) {
+                        resultBox.style.display = "block";
+                        resultBox.innerHTML = "<h3>No Flights Found</h3>";
+                        return;
+                    }
+
+                    resultBox.style.display = "block";
+                    resultBox.innerHTML = result.map(f => `
+                        <div class="flight-card">
+                            <div>
+                                <h3>${f.airline}</h3>
+                                <p>${f.from} → ${f.to}</p>
+                            </div>
+
+                            <div>
+                                ${f.departure} - ${f.arrival}
+                            </div>
+
+                            <div>
+                                ${f.duration}
+                            </div>
+
+                            <div>
+                                <strong>₹${f.price}</strong>
+                            </div>
+
+                            <button>Select</button>
+                        </div>
+                    `).join("");
+                });
+
+                /* ── Scroll reveal ── */
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+                }, { threshold: 0.1 });
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+                /* ── Booking modal ── */
+                let currentFlight = {};
+                function openModal(id, from, to, time, price, dur) {
+                    currentFlight = { id, from, to, time, price, dur };
+                    document.getElementById('modalTitle').textContent = `Book ${from} → ${to}`;
+                    document.getElementById('flightSummary').innerHTML = `✈ <strong>${from} → ${to}</strong> &nbsp;|&nbsp; ${time} &nbsp;|&nbsp; ${dur} &nbsp;|&nbsp; <strong>${price}</strong> per person`;
+                    document.getElementById('bookingForm').style.display = 'block';
+                    document.getElementById('successMsg').classList.remove('show');
+                    document.getElementById('bookingError').textContent = '';
+                    document.getElementById('bookingModal').classList.add('show');
+                }
+                function closeModal() { document.getElementById('bookingModal').classList.remove('show'); }
+                function confirmBooking() {
+                    const fn = document.getElementById('bookingFirstName').value.trim();
+                    const ln = document.getElementById('bookingLastName').value.trim();
+                    const em = document.getElementById('bookingEmail').value.trim();
+                    const ph = document.getElementById('bookingPhone').value.trim();
+                    if (!fn || !ln || !em || !ph) { document.getElementById('bookingError').textContent = 'Please fill in all fields.'; return; }
+                    if (!em.includes('@')) { document.getElementById('bookingError').textContent = 'Please enter a valid email.'; return; }
+                    document.getElementById('bookingForm').style.display = 'none';
+                    document.getElementById('successMsg').classList.add('show');
+                    setTimeout(closeModal, 3000);
+                }
+                document.getElementById('bookingModal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+
+                /* ── Flight Tracker ── */
+                const FLIGHTS = {
+                    'AI302': { num: 'AI302', airline: 'Air India', from: 'DEL', fromCity: 'Delhi', to: 'BOM', toCity: 'Mumbai', status: 'ontime', progress: 65, dep: '08:00', arr: '10:10', date: 'Jun 21', alt: '35000 ft', speed: '820 km/h', gate: 'B12', terminal: 'T3' },
+                    'IX201': { num: 'IX201', airline: 'Air India Express', from: 'BLR', fromCity: 'Bangalore', to: 'CCU', toCity: 'Kolkata', status: 'delayed', progress: 30, dep: '11:30', arr: '14:15', date: 'Jun 21', alt: '28000 ft', speed: '790 km/h', gate: 'A5', terminal: 'T1' },
+                    'SG103': { num: 'SG103', airline: 'SpiceJet', from: 'HYD', fromCity: 'Hyderabad', to: 'DEL', toCity: 'Delhi', status: 'landed', progress: 100, dep: '06:00', arr: '08:40', date: 'Jun 21', alt: '0 ft', speed: '0 km/h', gate: 'C3', terminal: 'T2' },
+                    '6E456': { num: '6E456', airline: 'IndiGo', from: 'BOM', fromCity: 'Mumbai', to: 'GWL', toCity: 'Gwalior', status: 'ontime', progress: 48, dep: '14:00', arr: '16:10', date: 'Jun 21', alt: '33000 ft', speed: '830 km/h', gate: 'D7', terminal: 'T2' },
+                };
+                function trackFlight() {
+                    const val = document.getElementById('flightInput').value.trim().toUpperCase();
+                    const err = document.getElementById('trackerError');
+                    const res = document.getElementById('trackerResult');
+                    err.classList.remove('show'); res.classList.remove('show');
+                    if (!val) { err.textContent = 'Please enter a flight number.'; err.classList.add('show'); return; }
+                    const f = FLIGHTS[val];
+                    if (!f) { err.textContent = `Flight "${val}" not found. Try AI302, IX201, SG103 or 6E456.`; err.classList.add('show'); return; }
+                    const pillClass = f.status === 'ontime' ? 'pill-ontime' : f.status === 'delayed' ? 'pill-delayed' : 'pill-landed';
+                    const pillText = f.status === 'ontime' ? 'On Time' : f.status === 'delayed' ? 'Delayed' : 'Landed';
+                    res.innerHTML = `
+    <div class="fl-result-header">
+      <div><div class="fl-result-num">${f.num}</div><div class="fl-result-airline">${f.airline}</div></div>
+      <span class="status-pill ${pillClass}">${pillText}</span>
+    </div>
+    <div class="route-row">
+      <div class="airport-block"><div class="iata-code">${f.from}</div><div class="airport-city">${f.fromCity}</div></div>
+      <div class="route-center">
+        <div class="progress-bar-wrap"><div class="progress-bar" style="width:${f.progress}%"><span class="progress-plane">✈</span></div></div>
+        <div class="route-duration">${f.progress}% complete</div>
+      </div>
+      <div class="airport-block"><div class="iata-code">${f.to}</div><div class="airport-city">${f.toCity}</div></div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="s-label">Altitude</div><div class="s-val blue">${f.alt}</div></div>
+      <div class="stat-cell"><div class="s-label">Speed</div><div class="s-val blue">${f.speed}</div></div>
+      <div class="stat-cell"><div class="s-label">Gate</div><div class="s-val">${f.gate}</div></div>
+      <div class="stat-cell"><div class="s-label">Terminal</div><div class="s-val">${f.terminal}</div></div>
+    </div>
+    <div class="time-row">
+      <div class="time-block"><div class="t-label">Departure</div><div class="t-val">${f.dep}</div><div class="t-date">${f.date}</div></div>
+      <div class="time-arrow">→</div>
+      <div class="time-block"><div class="t-label">Arrival</div><div class="t-val">${f.arr}</div><div class="t-date">${f.date}</div></div>
+    </div>`;
+                    res.classList.add('show');
+                }
+                document.getElementById('flightInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') trackFlight(); });
+
+                /* ── AI Chat ── */
+                function toggleChat() { document.getElementById('aiChatBox').classList.toggle('open'); }
+                function sendMessage() {
+                    const inp = document.getElementById('chatInput');
+                    const body = document.getElementById('chatBody');
+                    const msg = inp.value.trim();
+                    if (!msg) return;
+                    body.innerHTML += `<div class="ai-message user">${msg}</div>`;
+                    inp.value = '';
+                    body.scrollTop = body.scrollHeight;
+                    const replies = ['I can help you find the best flights! What route are you looking for?', 'Great question! Our deals change daily — check the Offers section.', 'For booking support, please use the booking form on any flight card.', 'You can track your live flight using the tracker section on this page!'];
+                    setTimeout(() => {
+                        body.innerHTML += `<div class="ai-message assistant">${replies[Math.floor(Math.random() * replies.length)]}</div>`;
+                        body.scrollTop = body.scrollHeight;
+                    }, 800);
+                }
+
+                /* ── Auth Modal ── */
+                function openAuth(tab) {
+                    document.getElementById('authOverlay').classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                    switchAuthTab(tab || 'login');
+                }
+                function closeAuth() {
+                    document.getElementById('authOverlay').classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+                function closeAuthOnBg(e) { if (e.target === document.getElementById('authOverlay')) closeAuth(); }
+                function switchAuthTab(tab) {
+                    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+                    document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+                    document.getElementById('formLogin').classList.toggle('active', tab === 'login');
+                    document.getElementById('formSignup').classList.toggle('active', tab === 'signup');
+                }
+
+                /* ── Toggle password visibility ── */
+                function togglePass(id, btn) {
+                    const inp = document.getElementById(id);
+                    const show = inp.type === 'password';
+                    inp.type = show ? 'text' : 'password';
+                    btn.textContent = show ? '🙈' : '👁';
+                }
+
+                /* ── Password strength ── */
+                function checkStrength(val) {
+                    let score = 0;
+                    if (val.length >= 8) score++;
+                    if (/[A-Z]/.test(val)) score++;
+                    if (/[0-9]/.test(val)) score++;
+                    if (/[^A-Za-z0-9]/.test(val)) score++;
+                    const colors = ['', '#f87171', '#fbbf24', '#34d399', '#4f8ef7'];
+                    const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+                    for (let i = 1; i <= 4; i++) {
+                        document.getElementById('bar' + i).style.background = i <= score ? colors[score] : 'rgba(255,255,255,0.1)';
+                    }
+                    const sl = document.getElementById('strengthLabel');
+                    sl.textContent = val.length ? labels[score] + ' password' : 'Password strength';
+                    sl.style.color = val.length ? colors[score] : 'rgba(255,255,255,0.4)';
+                }
+
+                /* ── Show error helper ── */
+                function showFormError(id, msg) {
+                    const el = document.getElementById(id);
+                    el.textContent = msg; el.style.display = 'block';
+                    setTimeout(() => el.style.display = 'none', 4000);
+                }
+                // --checkvisa--* //
+                function checkVisa() {
+
+                    const nationality = document.getElementById("nationality").value;
+                    const country = document.getElementById("country").value;
+                    const travelDate = document.getElementById("travelDate").value;
+                    const result = document.getElementById("visaResult");
+
+                    if (!nationality || !country || !travelDate) {
+                        result.innerHTML =
+                            `<div class="visa-card error">
+            ⚠ Please select Nationality, Destination and Travel Date.
+        </div>`;
+                        return;
+                    }
+
+                    let fee = "";
+                    let processing = "";
+                    let stay = "";
+                    let documents = "";
+                    let status = "";
+
+                    if (country === "Dubai") {
+                        status = "🛂 Visa Required";
+                        fee = "₹4,500";
+                        processing = "3–5 Working Days";
+                        stay = "30 Days";
+                        documents = "Passport, Photo, Flight Ticket, Hotel Booking, Bank Statement";
+                    }
+
+                    else if (country === "Thailand") {
+                        status = "✅ Visa on Arrival";
+                        fee = "₹2,000";
+                        processing = "On Arrival";
+                        stay = "15 Days";
+                        documents = "Passport, Return Ticket";
+                    }
+
+                    else if (country === "Japan") {
+                        status = "🛂 Tourist Visa Required";
+                        fee = "₹500";
+                        processing = "5–7 Working Days";
+                        stay = "90 Days";
+                        documents = "Passport, Photo, Flight Ticket, Bank Statement";
+                    }
+
+                    else if (country === "Singapore") {
+                        status = "🛂 Visa Required";
+                        fee = "₹2,500";
+                        processing = "3–5 Working Days";
+                        stay = "30 Days";
+                        documents = "Passport, Hotel Booking, Return Ticket";
+                    }
+
+                    else if (country === "France") {
+                        status = "🛂 Schengen Visa Required";
+                        fee = "₹7,200";
+                        processing = "15 Working Days";
+                        stay = "90 Days";
+                        documents = "Passport, Insurance, Flight Ticket, Hotel Booking, Bank Statement";
+                    }
+
+                    result.innerHTML = `
+        <div class="visa-card">
+
+            <h3>✈ Visa Information</h3>
+
+            <p><strong>${nationality}</strong> ➜ <strong>${country}</strong></p>
+
+            <h2>${status}</h2>
+
+            <hr>
+
+            <p>💰 <b>Visa Fee:</b> ${fee}</p>
+
+            <p>⏳ <b>Processing Time:</b> ${processing}</p>
+
+            <p>📅 <b>Maximum Stay:</b> ${stay}</p>
+
+            <p>📄 <b>Required Documents:</b><br>${documents}</p>
+
+
+        </div>
+    `;
+                }
+                // =============================
+                // AUTH MODAL FUNCTIONS
+                // =============================
+
+                // Open Login / Signup Modal
+                function openAuth() {
+                    document.getElementById("authModal").style.display = "flex";
+                }
+
+                // Close Login / Signup Modal
+                function closeAuth() {
+                    document.getElementById("authModal").style.display = "none";
+                }
+
+                // =============================
+                // OPEN AUTH MODAL
+                // =============================
+                function openAuth(tab = "login") {
+
+                    const overlay = document.getElementById("authOverlay");
+
+                    if (!overlay) {
+                        console.error("authOverlay not found!");
+                        return;
+                    }
+
+                    overlay.style.display = "flex";
+                    document.body.style.overflow = "hidden";
+
+                    switchAuthTab(tab);
+                }
+
+
+                // =============================
+                // CLOSE AUTH MODAL
+                // =============================
+                function closeAuth() {
+
+                    const overlay = document.getElementById("authOverlay");
+
+                    if (!overlay) return;
+
+                    overlay.style.display = "none";
+                    document.body.style.overflow = "auto";
+
+                    // Reset forms
+                    document.getElementById("loginError").innerHTML = "";
+                    document.getElementById("signupError").innerHTML = "";
+
+                    document.getElementById("signupFields").style.display = "block";
+                    document.getElementById("signupSuccess").style.display = "none";
+
+                    switchAuthTab("login");
+                }
+
+
+                // =============================
+                // CLOSE WHEN CLICKING BACKGROUND
+                // =============================
+                function closeAuthOnBg(event) {
+
+                    if (event.target.id === "authOverlay") {
+                        closeAuth();
+                    }
+                }
+
+
+                // =============================
+                // SHOW FORM ERROR
+                // =============================
+                function showFormError(id, message) {
+
+                    const errorBox = document.getElementById(id);
+
+                    if (!errorBox) return;
+
+                    errorBox.innerHTML = message;
+                    errorBox.style.display = "block";
+
+                    setTimeout(() => {
+                        errorBox.innerHTML = "";
+                        errorBox.style.display = "none";
+                    }, 3000);
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const navLinks = document.querySelectorAll('.nav-link');
+
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function () {
+                            navLinks.forEach(l => l.classList.remove('active'));
+                            this.classList.add('active');
+                        });
+                    });
+                });
+
+                // =============================
+                // TOGGLE PASSWORD
+                // =============================
+                function togglePass(inputId, btn) {
+
+                    const input = document.getElementById(inputId);
+
+                    if (input.type === "password") {
+                        input.type = "text";
+                        btn.innerHTML = "🙈";
+                    } else {
+                        input.type = "password";
+                        btn.innerHTML = "👁";
+                    }
+                }
+
+
+                // =============================
+                // PASSWORD STRENGTH
+                // =============================
+                function checkStrength(password) {
+
+                    const bars = [
+                        document.getElementById("bar1"),
+                        document.getElementById("bar2"),
+                        document.getElementById("bar3"),
+                        document.getElementById("bar4")
+                    ];
+
+                    const label = document.getElementById("strengthLabel");
+
+                    bars.forEach(bar => bar.style.background = "#ddd");
+
+                    let score = 0;
+
+                    if (password.length >= 8) score++;
+                    if (/[A-Z]/.test(password)) score++;
+                    if (/[0-9]/.test(password)) score++;
+                    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+                    for (let i = 0; i < score; i++) {
+                        bars[i].style.background = "#00c853";
+                    }
+
+                    const text = [
+                        "Password strength",
+                        "Weak",
+                        "Medium",
+                        "Good",
+                        "Strong"
+                    ];
+
+                    label.innerHTML = text[score];
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const viewDealsBtn = document.getElementById('viewDealsBtn');
+                    const dealsContainer = document.getElementById('dealsContainer');
+
+                    if (viewDealsBtn && dealsContainer) {
+                        viewDealsBtn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            dealsContainer.classList.add('show');
+                            dealsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    }
+                });
+
+
+                // =============================
+                // PAYMENT
+                // =============================
+
+                function processPayment() {
+                    alert("Payment Working ✅");
+                }
+            </script>
+
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations | Fly Easy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0f1e;
+            color: #ffffff;
+        }
+
+        /* Navbar */
+        .navbar-wrap {
+            background: #0a0f1e;
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .navbar {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+
+        .navbar a {
+            color: #b0b6c8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .navbar a.active,
+        .navbar a:hover {
+            color: #ffffff;
+        }
+
+        /* Hero */
+        .dest-hero {
+            padding: 80px 40px 50px;
+            text-align: center;
+            background: radial-gradient(circle at 25% 25%, rgba(124, 108, 246, 0.22), transparent 50%),
+                radial-gradient(circle at 75% 65%, rgba(185, 142, 240, 0.18), transparent 50%);
+        }
+
+        .dest-hero .eyebrow {
+            display: inline-block;
+            background: rgba(124, 108, 246, 0.15);
+            border: 1px solid rgba(124, 108, 246, 0.4);
+            color: #c3b8fb;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        .dest-hero h1 {
+            font-size: 42px;
+            margin-bottom: 14px;
+        }
+
+        .dest-hero h1 span {
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .dest-hero p {
+            color: #b0b6c8;
+            max-width: 540px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+
+        /* Filter tabs */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 40px 40px 0;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: transparent;
+            color: #b0b6c8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Destination grid */
+        .dest-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 40px 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .dest-card {
+            background: #131a2c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dest-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .dest-card .banner {
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            background: linear-gradient(135deg, rgba(124, 108, 246, 0.35), rgba(185, 142, 240, 0.25));
+        }
+
+        .dest-card .body {
+            padding: 20px;
+            position: relative;
+        }
+
+        .dest-card .tag {
+            position: absolute;
+            top: -14px;
+            right: 20px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .dest-card h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .dest-card .country {
+            color: #8b91a7;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .dest-card .price {
+            color: #b0b6c8;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .dest-card .price strong {
+            color: white;
+        }
+
+        .dest-card button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid rgba(124, 108, 246, 0.5);
+            color: #c3b8fb;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dest-card button:hover {
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar-wrap">
+        <ul class="navbar">
+            <li><a href="destinations.html" class="active">Destinations</a></li>
+        </ul>
+    </div>
+
+    <section class="dest-hero">
+        <span class="eyebrow">✦ Explore the world</span>
+        <h1>Popular <span>Destinations</span></h1>
+        <p>From weekend getaways to bucket-list trips, find your next journey and book it at unbeatable prices.</p>
+    </section>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="domestic">Domestic</button>
+        <button class="filter-btn" data-filter="international">International</button>
+    </div>
+
+    <section class="dest-grid" id="destGrid">
+        <div class="dest-card" data-category="domestic">
+            <div class="banner">🏖️</div>
+            <div class="body">
+                <span class="tag">Trending</span>
+                <h3>Goa</h3>
+                <div class="country">India</div>
+                <div class="price">From <strong>₹3,499</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="domestic">
+            <div class="banner">🏔️</div>
+            <div class="body">
+                <h3>Manali</h3>
+                <div class="country">India</div>
+                <div class="price">From <strong>₹4,199</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="international">
+            <div class="banner">🕌</div>
+            <div class="body">
+                <span class="tag">Popular</span>
+                <h3>Dubai</h3>
+                <div class="country">UAE</div>
+                <div class="price">From <strong>₹14,999</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="international">
+            <div class="banner">🏙️</div>
+            <div class="body">
+                <h3>Singapore</h3>
+                <div class="country">Singapore</div>
+                <div class="price">From <strong>₹12,499</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="international">
+            <div class="banner">🛕</div>
+            <div class="body">
+                <h3>Bangkok</h3>
+                <div class="country">Thailand</div>
+                <div class="price">From <strong>₹10,999</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="international">
+            <div class="banner">🏰</div>
+            <div class="body">
+                <span class="tag">Best Deal</span>
+                <h3>London</h3>
+                <div class="country">United Kingdom</div>
+                <div class="price">From <strong>₹29,999</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="domestic">
+            <div class="banner">🕌</div>
+            <div class="body">
+                <h3>Jaipur</h3>
+                <div class="country">India</div>
+                <div class="price">From <strong>₹2,799</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+
+        <div class="dest-card" data-category="international">
+            <div class="banner">🗻</div>
+            <div class="body">
+                <h3>Kathmandu</h3>
+                <div class="country">Nepal</div>
+                <div class="price">From <strong>₹6,999</strong></div>
+                <button>View Flights</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.dest-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

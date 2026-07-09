@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Class | Fly Easy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0f1e;
+            color: #ffffff;
+        }
+
+        /* Navbar */
+        .navbar-wrap {
+            background: #0a0f1e;
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .navbar {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+
+        .navbar a {
+            color: #b0b6c8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .navbar a.active,
+        .navbar a:hover {
+            color: #ffffff;
+        }
+
+        /* Hero */
+        .biz-hero {
+            padding: 80px 40px 60px;
+            background: radial-gradient(circle at 20% 20%, rgba(124, 108, 246, 0.25), transparent 50%),
+                radial-gradient(circle at 80% 60%, rgba(185, 142, 240, 0.2), transparent 50%);
+            text-align: center;
+        }
+
+        .biz-hero .eyebrow {
+            display: inline-block;
+            background: rgba(124, 108, 246, 0.15);
+            border: 1px solid rgba(124, 108, 246, 0.4);
+            color: #c3b8fb;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        .biz-hero h1 {
+            font-size: 44px;
+            margin-bottom: 16px;
+        }
+
+        .biz-hero h1 span {
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .biz-hero p {
+            color: #b0b6c8;
+            max-width: 560px;
+            margin: 0 auto;
+            font-size: 17px;
+        }
+
+        /* Perks grid */
+        .perks {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .perk-card {
+            background: #131a2c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .perk-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .perk-card .icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .perk-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .perk-card p {
+            color: #b0b6c8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .biz-cta {
+            text-align: center;
+            padding: 60px 40px 100px;
+        }
+
+        .biz-cta button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #7c6cf6, #b98ef0);
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar-wrap">
+        <ul class="navbar">
+        <li><a href="support.html" class="active">Support</a></li>
+        </ul>
+    </div>
+
+    <section class="biz-hero">
+        <span class="eyebrow">✦ Elevated travel</span>
+        <h1>Business Class,<br><span>Redefined Comfort</span></h1>
+        <p>Lie-flat seats, priority everything, and a journey that feels like the destination already started.</p>
+    </section>
+
+    <section class="perks">
+        <div class="perk-card">
+            <div class="icon">🛋️</div>
+            <h3>Lie-Flat Seating</h3>
+            <p>Fully reclining seats with extra legroom, designed for real rest on long-haul flights.</p>
+        </div>
+        <div class="perk-card">
+            <div class="icon">🍽️</div>
+            <h3>Chef-Curated Dining</h3>
+            <p>Multi-course meals crafted by top chefs, with a dedicated menu for every route.</p>
+        </div>
+        <div class="perk-card">
+            <div class="icon">🛄</div>
+            <h3>Priority Everything</h3>
+            <p>Skip the lines with priority check-in, security, boarding, and baggage handling.</p>
+        </div>
+        <div class="perk-card">
+            <div class="icon">🛋️</div>
+            <h3>Lounge Access</h3>
+            <p>Complimentary access to premium lounges at every major hub on your itinerary.</p>
+        </div>
+        <div class="perk-card">
+            <div class="icon">🎧</div>
+            <h3>Premium Entertainment</h3>
+            <p>Noise-cancelling headsets and a curated selection of films, shows, and music.</p>
+        </div>
+        <div class="perk-card">
+            <div class="icon">💼</div>
+            <h3>Flexible Booking</h3>
+            <p>Free date changes and cancellations, because plans change and you shouldn't pay for it.</p>
+        </div>
+    </section>
+
+    <section class="biz-cta">
+        <button onclick="alert('Booking flow coming soon!')">Explore Business Fares →</button>
+    </section>
+
+</body>
+
+</html>
