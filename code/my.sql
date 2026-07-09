@@ -4,10 +4,15 @@
 --  Compatible with MySQL 8.0+
 -- ============================================================
 SELECT user, host FROM mysql.user;
-ALTER USER 'root'@'localhost'
-IDENTIFIED WITH mysql_native_password BY '123456';
+
+ALTER USER 'root' @'localhost' IDENTIFIED
+WITH
+    mysql_native_password BY '123456';
+
 CREATE DATABASE airline_db;
+
 USE airline_db;
+
 CREATE DATABASE IF NOT EXISTS airflow_airlines CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE airflow_airlines;
@@ -15,8 +20,7 @@ USE airflow_airlines;
 -- ============================================================
 -- 1. USERS  (login / signup)
 -- ============================================================
-CREATE
-TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
     user_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
@@ -40,7 +44,6 @@ CREATE TABLE airports (
     country VARCHAR(80) NOT NULL,
     timezone VARCHAR(60) DEFAULT 'Asia/Kolkata'
 );
-
 
 -- ============================================================
 -- 3. AIRCRAFT
