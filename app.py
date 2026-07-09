@@ -112,3 +112,14 @@ app = create_app()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+import mysql.connector
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="123456",
+    database="airline_db"
+)
+
+print("Database Connected")
