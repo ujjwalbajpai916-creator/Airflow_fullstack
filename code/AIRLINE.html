@@ -700,8 +700,24 @@
             border: 0.5px solid rgba(255, 255, 255, 0.06);
         }
 
+        .offer-card-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
         .offer-card:hover {
             transform: translateY(-5px);
+        }
+
+        .offer-card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: block;
         }
 
         .offer-card:nth-child(1) {
@@ -1974,6 +1990,264 @@
             font-family: inherit;
         }
 
+        :root {
+            --bg1: #0a0a2e;
+            --bg2: #04041a;
+            --accent1: #6d6dfb;
+            --accent2: #8f7bf5;
+            --text-main: #ffffff;
+            --text-dim: #b9b9d9;
+            --text-faint: #8a8ab0;
+            --divider: rgba(255, 255, 255, 0.08);
+        }
+
+        footer {
+            background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 70%);
+            color: var(--text-dim);
+            padding: 56px 64px 0 64px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .top {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 40px;
+        }
+
+        .brand-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .brand h2 {
+            color: var(--text-main);
+            font-size: 28px;
+            margin: 0 0 12px 0;
+        }
+
+        .brand p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            max-width: 320px;
+            margin: 0 0 24px 0;
+        }
+
+        .social-label {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #fff;
+            color: #1a1a4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform .15s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+
+        .col h3 {
+            color: var(--text-main);
+            font-size: 19px;
+            margin: 0 0 4px 0;
+            display: inline-block;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--accent1);
+        }
+
+        .col {
+            margin-top: 4px;
+        }
+
+        .col ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0 0;
+        }
+
+        .col li {
+            margin-bottom: 14px;
+        }
+
+        .col a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color .15s ease;
+        }
+
+        .col a:hover {
+            color: var(--text-main);
+        }
+
+        .newsletter {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--divider);
+            border-radius: 16px;
+            padding: 32px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .newsletter h4 {
+            color: var(--text-main);
+            font-size: 24px;
+            margin: 0 0 6px 0;
+        }
+
+        .newsletter p {
+            margin: 0;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--divider);
+            color: var(--text-main);
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            min-width: 240px;
+            outline: none;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .newsletter-form button {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: #fff;
+            border: none;
+            padding: 14px 26px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .newsletter-form button:hover {
+            opacity: 0.9;
+        }
+
+        .bottom {
+            border-top: 1px solid var(--divider);
+            padding: 22px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-faint);
+        }
+
+        .bottom-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .bottom-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .bottom-links a:hover {
+            color: var(--text-main);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a1a4a;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all .25s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width:900px) {
+            .top {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            footer {
+                padding: 40px 24px 0;
+            }
+        }
+
+        @media (max-width:560px) {
+            .top {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .newsletter-form {
+                width: 100%;
+            }
+
+            .newsletter-form input {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
         /* ── FOOTER ── */
         .ultra-footer {
             position: relative;
@@ -3109,27 +3383,34 @@
             </div>
         </div>
 
-        <div class="offer-grid">
-            <div class="offer-card">
-                <div class="offer-badge">LIMITED TIME</div>
-                <h3>50% Off</h3>
-                <p>On your first booking with us</p>
-                <div class="offer-arrow">→</div>
-            </div>
+        <div className="offer-card">
+            <img className="offer-card-image"
+                src="https://thumbs.dreamstime.com/z/travel-promo-clipart-banner-design-travel-sale-special-offer-booking-discount-clip-art-luggage-bag-floater-surfboard-438871845.jpg?ct=jpeg"
+                alt="Travel promo banner" />
+            <div className="offer-badge">LIMITED TIME</div>
 
-            <div class="offer-card">
-                <div class="offer-badge">STUDENTS</div>
-                <h3>Extra 20%</h3>
-                <p>Exclusive student discount</p>
-                <div class="offer-arrow">→</div>
-            </div>
+            <h3>50% Off</h3>
 
+            <p>On your first booking with us</p>
+
+            <div className="offer-arrow">→</div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-badge">STUDENTS</div>
+            <h3>Extra 20%</h3>
+            <p>Exclusive student discount</p>
+            <div class="offer-arrow">→</div>
+        </div>
+
+        <a href="offers.html" class="offer-card-link">
             <div class="offer-card">
                 <div class="offer-badge">CASHBACK</div>
                 <h3>₹3000 Back</h3>
                 <p>Holiday season cashback offer</p>
                 <div class="offer-arrow">→</div>
             </div>
+        </a>
         </div>
 
 
@@ -3299,98 +3580,96 @@
         <!-- ════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════ -->
-        <footer class="ultra-footer">
-            <div class="ultra-footer-top">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <div class="footer-logo-icon">✈</div>
-                        <div>
-                            <h2>AirFlow</h2>
-                            <p>Experience luxury flying with premium comfort, global destinations, and world-class
-                                services.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="footer-social-section">
-                        <h3>SOCIAL MEDIA</h3>
-
-                        <div class="footer-socials">
-                            <a href="https://facebook.com" target="_blank">
-                                <i class="fab fa-facebook-f">ⓕ</i>
-                            </a>
-
-                            <a href="https://x.com" target="_blank">
-                                <i class="fa-brands fa-x-twitter">𝕏</i>
-                            </a>
-
-                            <a href="https://instagram.com" target="_blank">
-                                <i class="fa-brands fa-instagram">📷 </i>
-                            </a>
-
-                            <a href="https://linkedin.com" target="_blank">
-                                <i class="fab fa-linkedin-in">💼</i>
-                            </a>
-                        </div>
+        <footer>
+            <div class="top">
+                <div class="brand">
+                    <div class="brand-icon">✈️</div>
+                    <h2>AirFlow</h2>
+                    <p>Experience luxury flying with premium comfort, global destinations, and world-class services.</p>
+                    <div class="social-label">SOCIAL MEDIA</div>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">f</a>
+                        <a href="https://x.com/" target="_blank" rel="noopener noreferrer">𝕏</a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">📷</a>
+                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">💼</a>
                     </div>
                 </div>
 
-                <div class="footer-grid">
-                    <div class="footer-links">
-                        <h3>Company</h3>
-                        <a href="https://www.goindigo.in/about-us.html?linkNav=About%20us%7CCOMPANY%7CFooter"
-                            target="_blank">About Us</a>
-                        <a href="https://www.goindigo.in/contact-us.html?linkNav=Contact%20Us%7CSUPPORT%7CFooter">Contact
-                            us</a><a
-                            href="https://www.goindigo.in/about-us/leadership-team.html?linkNav=Leadership%20Team%7CCOMPANY%7CFooter">Leadership
-                            team</a><a
-                            href="https://www.goindigo.in/information/investor-relations.html?linkNav=Investor%20Relations%7CCOMPANY%7CFooter">Investor
-                            Relations</a>
-                    </div>
-                    <div class="footer-links">
-                        <h3>Support</h3>
-                        <a href="flight.html">Flight
-                            Status</a><a
-                            href="https://www.goindigo.in/initiate-refund.html?linkNav=Refund%20Claim%7CSUPPORT%7CFooter">Refund
-                            Claim
-                        </a><a href="helpcenter.html">Help
-                            Center
-                        </a><a href="baggagepolicy.html">Baggage
-                            Policy
-                        </a><a href="contacts.html">Contact
-                            Support</a>
-                    </div>
-                    <div class="footer-links">
-                        <h3>Quick Links</h3>
-                        <a href="offers.html">Offers</a><a href="destinations.html">Destinations</a><a
-                            href="web-checkin.html">Web Check-in</a><a href="travel-tips.html">Travel
-                            Tips</a><a href="download-app.html">Download App</a>
-                    </div>
+                <div class="col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about-us">About Us</a></li>
+                        <li><a href="/contact-us">Contact Us</a></li>
+                        <li><a href="/leadership-team">Leadership Team</a></li>
+                        <li><a href="/investor-relations">Investor Relations</a></li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/flight-status">Flight Status</a></li>
+                        <li><a href="/refund-claim">Refund Claim</a></li>
+                        <li><a href="/help-center">Help Center</a></li>
+                        <li><a href="/baggage-policy">Baggage Policy</a></li>
+                        <li><a href="/contact-support">Contact Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/offers">Offers</a></li>
+                        <li><a href="/destinations">Destinations</a></li>
+                        <li><a href="/web-check-in">Web Check-in</a></li>
+                        <li><a href="/travel-tips">Travel Tips</a></li>
+                        <li><a href="/download-app">Download App</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class=" footer-newsletter">
+
+            <div class="newsletter">
                 <div>
-                    <h2>Get Exclusive Flight Deals ✈</h2>
+                    <h4>Get Exclusive Flight Deals ✈️</h4>
                     <p>Subscribe to receive premium offers, travel updates and luxury experiences.</p>
                 </div>
-                <div class="newsletter-box">
-                    <input type="email" placeholder="Enter your email" />
-                    <button>Subscribe</button>
+                <div class="newsletter-form">
+                    <input type="email" id="emailInput" placeholder="Enter your email">
+                    <button onclick="subscribe()">Subscribe</button>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 AirFlow Airlines · All Rights Reserved</p>
 
-                <div class="footer-bottom-links">
-                    <a
-                        href="https://www.goindigo.in/information/privacy.html?linkNav=Privacy%20Policy%7CQUICK%20LINKS%7CFooter">Privacy
-                        Policy</a>
-                    <a
-                        href="https://www.goindigo.in/information/terms-and-conditions.html?linkNav=Terms%20and%20Conditions%7CQUICK%20LINKS%7CFooter">Terms</a>
-                    <a href="https://www.goindigo.in/careers.html?linkNav=careers_footer">Cookies</a>
+            <div class="bottom">
+                <div>© 2026 AirFlow Airlines · All Rights Reserved</div>
+                <div class="bottom-links">
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <a href="/terms">Terms</a>
+                    <a href="/cookies">Cookies</a>
                 </div>
             </div>
         </footer>
 
+        <div class="toast" id="toast"></div>
+
+        <script>
+            function showToast(msg) {
+                const t = document.getElementById('toast');
+                t.textContent = msg;
+                t.classList.add('show');
+                clearTimeout(window._toastTimer);
+                window._toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+            }
+            function subscribe() {
+                const input = document.getElementById('emailInput');
+                const val = input.value.trim();
+                if (!val || !val.includes('@')) {
+                    showToast('Please enter a valid email');
+                    return;
+                }
+                showToast('Subscribed: ' + val);
+                input.value = '';
+            }
+        </script>
 
         <!-- ════════════════════════════════════════════
      AI CHAT BUTTON

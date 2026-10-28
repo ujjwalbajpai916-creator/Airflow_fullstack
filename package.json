@@ -1,0 +1,11 @@
+{
+    "name": "airflow-fullstack",
+    "private": true,
+    "scripts": {
+        "dev": "concurrently --kill-others --names backend,frontend --prefix-colors blue,green \"python run_server.py\" \"npm --prefix frontend run dev\"",
+        "build": "npm --prefix frontend run build"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}

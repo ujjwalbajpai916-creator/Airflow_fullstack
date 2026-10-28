@@ -1,4 +1,3 @@
-// Stars
 const starsContainer = document.getElementById('starsContainer');
 for (let i = 0; i < 80; i++) {
     const star = document.createElement('div');
@@ -10,7 +9,7 @@ for (let i = 0; i < 80; i++) {
     starsContainer.appendChild(star);
 }
 
-// Search tabs
+
 document.querySelectorAll('.stab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));

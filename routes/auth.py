@@ -22,7 +22,11 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'success': False, 'message': 'Email already registered'}), 409
 
-    user = User(name=name, email=email, password=generate_password_hash(password))
+    user = User(
+        name=name,
+        email=email,
+        password=generate_password_hash(password)
+    )
     db.session.add(user)
     db.session.commit()
 
