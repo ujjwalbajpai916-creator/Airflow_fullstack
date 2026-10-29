@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, send_file
 from flask_mail import Message
 from extensions import mail
 from database import db
 from models import Booking, Flight
+from ticket_email import generate_ticket_pdf
 import random
 import string
 
@@ -110,6 +111,28 @@ def get_booking_by_ref(booking_ref):
         return jsonify({'success': False, 'message': 'Booking not found'}), 404
 
     return jsonify({'success': True, 'booking': booking.to_dict()}), 200
+
+
+@bookings_bp.route('/<string:booking_ref>/pdf', methods=['GET'])
+def download_booking_pdf(booking_ref):
+    """
+    GET /api/bookings/<booking_ref>/pdf
+    Generates and returns an official PDF boarding pass / ticket for download.
+    """
+    booking = Booking.query.filter_by(booking_ref=booking_ref).first()
+    if not booking:
+        return jsonify({'success': False, 'message': 'Booking not found'}), 404
+
+    try:
+        pdf_file = generate_ticket_pdf(booking, booking.flight)
+        return send_file(
+            pdf_file,
+            as_attachment=True,
+            download_name=f"AirFlow_Ticket_{booking.booking_ref}.pdf",
+            mimetype="application/pdf"
+        )
+    except Exception as e:
+        return jsonify({'success': False, 'message': f"PDF generation failed: {str(e)}"}), 500
 
 
 @bookings_bp.route('/<int:booking_id>/cancel', methods=['POST'])
