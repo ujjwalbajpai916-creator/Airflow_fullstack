@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect
+from flask import Flask, redirect, send_from_directory
 from flask_cors import CORS
 from extensions import mail
 from database import db
@@ -11,22 +11,30 @@ from routes.newsletter import newsletter_bp
 
 
 def create_app():
-    app = Flask(__name__, static_folder='code', static_url_path='')
+    dist_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'frontend', 'dist'))
+    legacy_code_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'code'))
 
-    app.config['SECRET_KEY'] = 'airflow-secret-key-2026'
+    # Serve built React frontend if dist exists, otherwise fall back to legacy code folder
+    if os.path.exists(dist_dir):
+        app = Flask(__name__, static_folder=dist_dir, static_url_path='')
+    else:
+        app = Flask(__name__, static_folder=legacy_code_dir, static_url_path='')
+
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///airflow.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///airflow.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'airflowbooking@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'abcd efgh ijkl mnop'
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'airflowbooking@gmail.com')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
     CORS(app, supports_credentials=True)
     db.init_app(app)
     mail.init_app(app)
 
+    # API Blueprints
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(flights_bp, url_prefix='/api/flights')
     app.register_blueprint(bookings_bp, url_prefix='/api/bookings')
@@ -46,8 +54,20 @@ def create_app():
             ]
         }
 
-    @app.route('/')
-    def home():
+    # Catch-all route to serve the React single-page application (SPA)
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve_frontend(path):
+        if path.startswith('api'):
+            return {'error': 'API endpoint not found'}, 404
+
+        if os.path.exists(dist_dir):
+            target_path = os.path.join(dist_dir, path)
+            if path != "" and os.path.exists(target_path):
+                return send_from_directory(dist_dir, path)
+            return send_from_directory(dist_dir, 'index.html')
+
+        # If frontend is running separately on Vite dev server
         frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:5173/')
         if os.environ.get('USE_VITE_FRONTEND', 'true').lower() == 'true':
             return redirect(frontend_url, code=302)
