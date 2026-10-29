@@ -1,4 +1,4 @@
-﻿import os
+import os
 from flask import Flask, redirect
 from flask_cors import CORS
 from extensions import mail
@@ -22,6 +22,7 @@ def create_app():
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USERNAME'] = 'airflowbooking@gmail.com'
     app.config['MAIL_PASSWORD'] = 'abcd efgh ijkl mnop'
+
     CORS(app, supports_credentials=True)
     db.init_app(app)
     mail.init_app(app)
@@ -88,4 +89,5 @@ def seed_data():
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)

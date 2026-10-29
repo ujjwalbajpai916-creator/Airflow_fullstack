@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import SeatSelection from './SeatSelection';
 import bookingService from '../services/bookingService';
+import { generateBoardingPassPDF } from '../utils/pdfGenerator';
 
 export default function BookingModal({ flight, cabinClass = 'Economy', onClose, user }) {
     if (!flight) return null;
@@ -39,6 +40,31 @@ export default function BookingModal({ flight, cabinClass = 'Economy', onClose, 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [confirmedBooking, setConfirmedBooking] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+
+    const handleDownloadPDF = async () => {
+        if (!confirmedBooking) return;
+        setIsDownloadingPDF(true);
+        try {
+            if (!confirmedBooking.isSimulated && confirmedBooking.booking_ref) {
+                // If live backend booking, download generated PDF from Flask
+                const link = document.createElement('a');
+                link.href = `/api/bookings/${confirmedBooking.booking_ref}/pdf`;
+                link.setAttribute('download', `AirFlow_Ticket_${confirmedBooking.booking_ref}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                // In-browser vector boarding pass PDF generator
+                generateBoardingPassPDF(confirmedBooking, flight);
+            }
+        } catch (err) {
+            console.warn('Backend download failed, generating in-browser PDF:', err);
+            generateBoardingPassPDF(confirmedBooking, flight);
+        } finally {
+            setTimeout(() => setIsDownloadingPDF(false), 800);
+        }
+    };
 
     const unitPrice = selectedClass === 'Business' ? flight.priceBusiness : flight.priceEconomy;
     const totalAmount = unitPrice * passengersCount;
@@ -566,11 +592,12 @@ export default function BookingModal({ flight, cabinClass = 'Economy', onClose, 
                             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                                 <button
                                     type="button"
-                                    onClick={() => alert('Boarding pass PDF downloaded (simulated).')}
-                                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                                    disabled={isDownloadingPDF}
+                                    onClick={handleDownloadPDF}
+                                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer"
                                 >
-                                    <Download className="w-4 h-4" />
-                                    <span>Download Boarding Pass</span>
+                                    <Download className={`w-4 h-4 ${isDownloadingPDF ? 'animate-bounce' : ''}`} />
+                                    <span>{isDownloadingPDF ? 'Generating PDF...' : 'Download Boarding Pass'}</span>
                                 </button>
                                 <button
                                     type="button"
